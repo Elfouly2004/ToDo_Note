@@ -78,7 +78,10 @@ class _onboardingState extends State<onboarding> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: Text("${AppTexts.lets}",textAlign: TextAlign.center,)),
+                  Expanded(child: Text("${AppTexts.lets}",  style: TextStyle(fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900
+                  ),textAlign: TextAlign.center,)),
                   Image(image: AssetImage(AppImages.arrow),width: 30,),
                 ],
               ),

@@ -1,15 +1,40 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo/core/Appcolors.dart';
 import 'package:todo/core/Apptexts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo/features/Home/homescreen.dart';
 import '../../core/Appimages.dart';
 
-class regester extends StatelessWidget {
+class regester extends StatefulWidget {
   const regester({super.key});
 
   @override
+  State<regester> createState() => _regesterState();
+}
+
+class _regesterState extends State<regester> {
+
+  String name ="";
+  // GlobalKey<FormState> formkey1= GlobalKey <FormState>();
+
+
+  XFile ? myPhoto ;
+  // myPhoto = null ;
+  Future<XFile?>   pickImage( ) async{
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+
+    return image;
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
+
     return  Scaffold(
 
 
@@ -18,21 +43,21 @@ class regester extends StatelessWidget {
            padding: const EdgeInsets.all(20),
            child: Column(
 
-         
+
              children: [
-         
-         
+
+
                Center(
                  child: Image(image: AssetImage(AppImages.logo)),
                ),
-         
+
                SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
-         
-         
-         
+
+
+
                GestureDetector(
                  onTap: () {
-         
+
                  },
                  child: Container(
                      height:MediaQuery.sizeOf(context).height*0.15,
@@ -41,25 +66,31 @@ class regester extends StatelessWidget {
                      borderRadius: BorderRadius.circular(20),
                      border: Border.all(color: AppColors.camera)
                    ),
-                   child:Center(
-                     child: Icon(
-                       Icons.camera_enhance_sharp,
-                       color: AppColors.camera,
-                     ),
-                   ) ,
+                   child:myPhoto == null?
+                   Icon(Icons.add_a_photo): ClipRRect(
+                       borderRadius: BorderRadius.circular(15),
+                       child: Image.file(File(myPhoto!.path))),
                  ),
-               ),
-               
-               
-               
+                 ),
+
+
+
+
                TextButton(
-                 onPressed: () {
-         
+
+                 onPressed: ( ) {
+                   pickImage().then((value) {
+                     myPhoto = (value);
+                     setState(() {
+
+                     });
+                   });
                  },
-                   child: Text(AppTexts.Add),
-                 ),
-         
-         
+
+                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update)),
+
+
+
                Container(
                  height:85 ,
                  width: 331,
@@ -79,7 +110,7 @@ class regester extends StatelessWidget {
                          children: [
 
                            TextFormField(
-
+                             keyboardType: TextInputType.name,
                              style: TextStyle(
                                 fontSize: 20,
                                fontWeight: FontWeight.w600,
@@ -89,11 +120,12 @@ class regester extends StatelessWidget {
                                 border: UnderlineInputBorder(borderRadius: BorderRadius.circular(20)),
                                   labelText: " Enter Your Name ",
                                 hintText: "Your Name  ",
-                                labelStyle: TextStyle(fontSize: 20)
-
-
-
+                                labelStyle: TextStyle(fontSize: 20),
                               ),
+
+                             onChanged: (value) {
+                              name=(value);
+                             },
 
                            ),
                          ],
@@ -110,7 +142,7 @@ class regester extends StatelessWidget {
                  onTap: () {
                    Navigator.pushReplacement(context, MaterialPageRoute(
                      builder: (context) {
-                       return regester();
+                       return homebody(name,photo:myPhoto!.path) ;
                      },));
                  },
                  child: Container(
@@ -128,17 +160,22 @@ class regester extends StatelessWidget {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                       Text("${AppTexts.Get}",textAlign: TextAlign.center,),
+                       Text("${AppTexts.Get}",
+                         style: TextStyle(fontSize: 20,
+                         color: Colors.white,
+                           fontWeight: FontWeight.w900
+                         )
+                         ,textAlign: TextAlign.center,),
                      ],
                    ),
                  ),
                ),
-         
-         
-         
-         
+
+
+
+
              ],
-         
+
            ),
          ),
        ),
