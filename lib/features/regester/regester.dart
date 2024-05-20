@@ -69,7 +69,8 @@ class _regesterState extends State<regester> {
                    child:myPhoto == null?
                    Icon(Icons.add_a_photo): ClipRRect(
                        borderRadius: BorderRadius.circular(15),
-                       child: Image.file(File(myPhoto!.path))),
+                       child: Image.file(File(myPhoto!.path),height:MediaQuery.sizeOf(context).height*0.15,
+                           width:MediaQuery.sizeOf(context).height*0.15 ,)),
                  ),
                  ),
 
