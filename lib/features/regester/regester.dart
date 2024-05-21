@@ -17,7 +17,7 @@ class regester extends StatefulWidget {
 class _regesterState extends State<regester> {
 
   String name ="";
-  // GlobalKey<FormState> formkey1= GlobalKey <FormState>();
+  GlobalKey<FormState> formkey1= GlobalKey <FormState>();
 
 
   XFile ? myPhoto ;
@@ -68,9 +68,10 @@ class _regesterState extends State<regester> {
                    ),
                    child:myPhoto == null?
                    Icon(Icons.add_a_photo): ClipRRect(
-                       borderRadius: BorderRadius.circular(15),
-                       child: Image.file(File(myPhoto!.path),height:MediaQuery.sizeOf(context).height*0.15,
-                           width:MediaQuery.sizeOf(context).height*0.15 ,)),
+                       borderRadius: BorderRadius.circular(20),
+                       child: Image.file(File(myPhoto!.path),fit: BoxFit.cover,
+                         height:MediaQuery.sizeOf(context).height*0.1,
+                           width:MediaQuery.sizeOf(context).height*0.1 ,)),
                  ),
                  ),
 
@@ -90,61 +91,106 @@ class _regesterState extends State<regester> {
 
                  child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update)),
 
+               Center(
+                 child: Form(
+                   key:formkey1,
+                   child: TextFormField(
+                     keyboardType: TextInputType.name,
+                     style: TextStyle(
+                       fontSize: 20,
+                       fontWeight: FontWeight.w600,
 
-
-               Container(
-                 height:85 ,
-                 width: 331,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20),
-                   border: Border.all(color: AppColors.blue)
-
-                 ),
-                 child: Column(
-                   mainAxisAlignment: MainAxisAlignment.end,
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Padding(
-                       padding: const EdgeInsets.all(.0),
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-
-                           TextFormField(
-                             keyboardType: TextInputType.name,
-                             style: TextStyle(
-                                fontSize: 20,
-                               fontWeight: FontWeight.w600,
-
-                             ),
-                              decoration: InputDecoration(
-                                border: UnderlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                                  labelText: " Enter Your Name ",
-                                hintText: "Your Name  ",
-                                labelStyle: TextStyle(fontSize: 20),
-                              ),
-
-                             onChanged: (value) {
-                              name=(value);
-                             },
-
-                           ),
-                         ],
-                       ),
                      ),
-                   ],
+                     decoration: InputDecoration(
+
+                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                       labelText: " Enter Your Name ",
+                       contentPadding: EdgeInsets.only(left: 20,top: 80,),
+                       hintText: "Your Name  ",
+                       labelStyle: TextStyle(fontSize: 20),
+                     ),
+
+
+                     onChanged: (value) {
+                       name=(value);
+                     },
+
+                     validator: (value) {
+                       if(value!.isEmpty==true){
+                         return "you should write your name";
+                       }else return null;
+                     },
+
+                   ),
                  ),
                ),
+
+               // Container(
+               //   height:85 ,
+               //   width: 331,
+               //   decoration: BoxDecoration(
+               //     borderRadius: BorderRadius.circular(20),
+               //     border: Border.all(color: AppColors.blue)
+               //
+               //   ),
+               //   child: Column(
+               //     mainAxisAlignment: MainAxisAlignment.end,
+               //     crossAxisAlignment: CrossAxisAlignment.start,
+               //     children: [
+               //       Padding(
+               //         padding: const EdgeInsets.only(top: 10),
+               //         child: Column(
+               //           crossAxisAlignment: CrossAxisAlignment.start,
+               //           children: [
+               //
+               //             Form(
+               //               key:formkey1,
+               //               child: TextFormField(
+               //                 keyboardType: TextInputType.name,
+               //                 style: TextStyle(
+               //                    fontSize: 20,
+               //                   fontWeight: FontWeight.w600,
+               //
+               //                 ),
+               //                  decoration: InputDecoration(
+               //                    border: UnderlineInputBorder(borderRadius: BorderRadius.circular(20)),
+               //                      labelText: " Enter Your Name ",
+               //                    hintText: "Your Name  ",
+               //                    labelStyle: TextStyle(fontSize: 20),
+               //                  ),
+               //
+               //                 onChanged: (value) {
+               //                  name=(value);
+               //                 },
+               //
+               //                 validator: (value) {
+               //                   if(value!.isEmpty==true){
+               //                     return "you should write your name";
+               //                   }else return null;
+               //                 },
+               //
+               //               ),
+               //             ),
+               //           ],
+               //         ),
+               //       ),
+               //     ],
+               //   ),
+               // ),
 
                SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
 
                GestureDetector(
                  onTap: () {
-                   Navigator.pushReplacement(context, MaterialPageRoute(
-                     builder: (context) {
-                       return homebody(name,photo:myPhoto!.path) ;
-                     },));
+
+                   if(formkey1.currentState!.validate()==true){
+                     Navigator.pushReplacement(context, MaterialPageRoute(
+                       builder: (context) {
+                         return homescreen(name,photo:myPhoto!.path) ;
+                       },));
+
+                   }
                  },
                  child: Container(
                    height:52 ,
