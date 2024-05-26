@@ -1,10 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:todo/core/Appcolors.dart';
-import 'package:todo/core/Appimages.dart';
+import 'package:todo/core/utils/Appcolors.dart';
+import 'package:todo/core/utils/Appimages.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/features/Home/widgets/homebody.dart';
+import 'package:todo/core/features/Home/widgets/homebody.dart';
+
+
+import '../Tasks/widgets/addtask.dart';
 class homescreen extends StatefulWidget {
   String name="";
   final String photo;
@@ -174,7 +176,9 @@ class _homescreenState extends State<homescreen> {
             padding: const EdgeInsets.only(bottom: 40),
             child: GestureDetector(
               onTap:  () {
-
+               Navigator.push(context, MaterialPageRoute(builder: (context) {
+                 return addtask();
+               },));
               },
               child: Container(
                 width: 55,

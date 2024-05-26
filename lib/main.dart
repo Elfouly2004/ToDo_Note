@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo/features/Boarding/onBoarding.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:todo/core/utils/Apptexts.dart';
 
-void main() {
+import 'core/features/Boarding/onBoarding.dart';
+
+void main() async{
+  await Hive.initFlutter();
+  await Hive.openBox(AppTexts.NotesBox);
   runApp(const MyApp());
 }
 

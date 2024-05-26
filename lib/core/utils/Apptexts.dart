@@ -11,6 +11,9 @@ class AppTexts {
 
   static const String update = "Update photo";
 
+  static const String Addtask = "Add Task";
+   static const String NotesBox = "Notebox";
+
 
 
 }

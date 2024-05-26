@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:todo/core/Appcolors.dart';
-import 'package:todo/core/Appimages.dart';
-import 'package:todo/core/Apptexts.dart';
+import 'package:todo/core/utils/Appcolors.dart';
+import 'package:todo/core/utils/Appimages.dart';
+import 'package:todo/core/utils/Apptexts.dart';
 import 'dart:ui';
 
-import 'package:todo/features/regester/regester.dart';
+
+import '../regester/regester.dart';
 
 class onboarding extends StatefulWidget {
   const onboarding({super.key});
@@ -82,7 +83,7 @@ class _onboardingState extends State<onboarding> {
                       color: Colors.white,
                       fontWeight: FontWeight.w900
                   ),textAlign: TextAlign.center,)),
-                  Image(image: AssetImage(AppImages.arrow),width: 30,),
+                  Image(image: AssetImage(AppImages.left),width: 30,),
                 ],
               ),
             ),

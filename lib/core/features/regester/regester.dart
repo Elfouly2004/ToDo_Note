@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:todo/core/Appcolors.dart';
-import 'package:todo/core/Apptexts.dart';
+import 'package:todo/core/utils/Appcolors.dart';
+import 'package:todo/core/utils/Apptexts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:todo/features/Home/homescreen.dart';
-import '../../core/Appimages.dart';
+
+import '../../utils/Appimages.dart';
+
+import '../Home/homescreen.dart';
 
 class regester extends StatefulWidget {
   const regester({super.key});
