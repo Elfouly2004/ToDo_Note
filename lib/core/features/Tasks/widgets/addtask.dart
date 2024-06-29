@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo/core/features/Home/homescreen.dart';
+import 'package:todo/core/features/Home/widgets/homebody.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
+import '../model/model.dart';
 
 class addtask extends StatefulWidget {
-  const addtask({super.key});
+ addtask(this.name,{required this.photo,});
+  String name="";
+  final String photo;
 
   @override
-  State<addtask> createState() => _addtaskState();
+  State<addtask> createState() => _addtaskState(this.name,this.photo);
 }
 
 class _addtaskState extends State<addtask> {
-  String taskname="";
-  final myController = TextEditingController();
+  String name="";
+  final String photo;
+  _addtaskState(this.name,this.photo);
+  String  ?taskname;
+  String? description;
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController descriptioncontroller = TextEditingController();
   DateTime selectedDate = DateTime.now();
+
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -33,8 +44,11 @@ class _addtaskState extends State<addtask> {
   GlobalKey<FormState> formkey1= GlobalKey <FormState>();
   GlobalKey<FormState> formkey2= GlobalKey <FormState>();
 
+  void Function(String?)? onsaved;
+
   @override
   Widget build(BuildContext context) {
+    var index;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -57,89 +71,101 @@ class _addtaskState extends State<addtask> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
         
-              Center(
-                child: Form(
-                  key:formkey1,
-                  child: TextFormField(
-        
-                    keyboardType: TextInputType.name,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-        
+              Container(
+                height: 90,
+                width: 331,
+                decoration:  BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Text("Task Name",style: TextStyle(
+                          fontSize: 14
+                        ),),
+
+
+                     Form(
+                      key:formkey1,
+                      child: TextFormField(
+                        controller: namecontroller,
+                        keyboardType: TextInputType.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+
+                          hintText: " Enter The Task Name   ",
+                          hintStyle: TextStyle(fontSize: 15,color: Color(0xff6E6A7C)),
+                        ),
+                        validator: (value) {
+                          if(value!.isEmpty==true){
+                            return "you should write your task name";
+                          }else return null;
+                        },
+
+
+                      ),
                     ),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-        
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      labelText: " Enter The Task Name   ",
-                      contentPadding: EdgeInsets.only(left: 20,top: 40,),
-        
-                      labelStyle: TextStyle(fontSize: 15),
-                    ),
+                  ],
 
-                    validator: (value) {
-                      if(value!.isEmpty==true){
-                        return "you should write your name";
-                      }else return null;
-                    },
-                    controller: TextEditingController(),
-                    onChanged: (value) {
-                      // Notes(textName: taskname);
-                      // value=taskname;
-                    },
-
-
-        
-                  ),
                 ),
               ),
         
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
-        
-              Center(
-                child: Form(
-                  key:formkey2,
-                  child: TextFormField(
-        
-                    keyboardType: TextInputType.name,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-        
-                    ),
-                    maxLines: 5,
-                    minLines: 5,
-                    decoration: InputDecoration(
-        
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)
+
+              Container(
+                height: 142,
+                width: 331,
+                decoration:  BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    Text("Description",style: TextStyle(
+                        fontSize: 14
+                    ),),
+
+                    Form(
+                      key:formkey2,
+                      child: TextFormField(
+                         controller: descriptioncontroller,
+                        keyboardType: TextInputType.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          hintText: "Enter The Task Desciption    ",
+                          hintStyle: TextStyle(fontSize: 15,color: Color(0xff6E6A7C)),
+                        ),
+
+                        validator: (value) {
+                          if(value!.isEmpty==true){
+                            return "you should write your task name";
+                          }else return null;
+                        },
+
+
                       ),
-                      labelText: "Enter The Task Desciption  ",
-                      contentPadding: EdgeInsets.all(10),
-        
-        
-                      labelStyle: TextStyle(fontSize: 15),
                     ),
-        
-        
-                    // onChanged: (value) {
-                    //   name=(value);
-                    // },
-        
-                    validator: (value) {
-                      if(value!.isEmpty==true){
-                        return "you should write your name";
-                      }else return null;
-                    },
-        
-                  ),
+                  ],
+
                 ),
               ),
         
@@ -179,12 +205,28 @@ class _addtaskState extends State<addtask> {
 
 
               GestureDetector(
-                onTap: () {
-                  // Note.add(Notes(textName: taskname));
+                onTap:() {
+
+                    String taskname = namecontroller.text.trim();
+                    String description =descriptioncontroller.text.trim();
+                    if(taskname.isNotEmpty&&description.isNotEmpty){
+                      namecontroller.text='';
+                      descriptioncontroller.text='';
+                      writenote.add(Notes(taskName:taskname, decsrption: description));
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo) ,)).then((k){
+                        setState(() {
+
+                        });
+                      });
+
+                    }
+
                 },
                 child: Container(
                   height:52 ,
                   width: 331,
+
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
@@ -216,3 +258,6 @@ class _addtaskState extends State<addtask> {
     );
   }
 }
+
+
+

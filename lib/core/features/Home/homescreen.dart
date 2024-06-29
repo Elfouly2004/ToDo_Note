@@ -4,9 +4,9 @@ import 'package:todo/core/utils/Appcolors.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/core/features/Home/widgets/homebody.dart';
-
-
+import '../Tasks/model/model.dart';
 import '../Tasks/widgets/addtask.dart';
+
 class homescreen extends StatefulWidget {
   String name="";
   final String photo;
@@ -168,31 +168,44 @@ class _homescreenState extends State<homescreen> {
 
 
       body: Column(
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
-          homebody(),
+          writenote.isEmpty? const Text("No Notes Yet ",
+            style: TextStyle(fontSize: 40),): homebody(),
+
+
+
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 40),
-            child: GestureDetector(
-              onTap:  () {
-               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                 return addtask();
-               },));
-              },
-              child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: LinearGradient(colors: [
-                    AppColors.blue,
-                    AppColors.move
-                  ])
-                ),
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
+            padding:  EdgeInsets.only( bottom:60),
+            child: Center(
+              child: GestureDetector(
+                onTap:  () {
+               setState(() {
+                 Navigator.push(context, MaterialPageRoute(builder: (context) {
+                   return addtask(
+                     photo: photo,
+                     name,
+
+                   );
+                 },));
+               });
+                },
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(colors: [
+                      AppColors.blue,
+                      AppColors.move
+                    ])
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -203,3 +216,5 @@ class _homescreenState extends State<homescreen> {
     );
   }
 }
+
+

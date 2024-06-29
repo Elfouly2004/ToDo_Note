@@ -22,6 +22,7 @@ class _onboardingState extends State<onboarding> {
 
       body: Padding(
         padding: EdgeInsets.all(20),
+
         child: Column(
           children: [
 
@@ -79,10 +80,13 @@ class _onboardingState extends State<onboarding> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: Text("${AppTexts.lets}",  style: TextStyle(fontSize: 20,
+                  Expanded(
+                      child:Text("${AppTexts.lets}",
+                    style: TextStyle(fontSize: 20,
                       color: Colors.white,
                       fontWeight: FontWeight.w900
-                  ),textAlign: TextAlign.center,)),
+                  ), textAlign: TextAlign.center,)
+                  ),
                   Image(image: AssetImage(AppImages.left),width: 30,),
                 ],
               ),

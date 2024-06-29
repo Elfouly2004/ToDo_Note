@@ -41,6 +41,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^25.2.5
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  flutter_bloc: ^8.1.5
 
 
 dev_dependencies:

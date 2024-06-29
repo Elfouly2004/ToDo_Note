@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/core/features/Home/widgets/Notes.dart';
 
 import '../../../utils/Appimages.dart';
 import '../../Tasks/model/model.dart';
@@ -15,36 +16,14 @@ class _homebodyState extends State<homebody> {
 
   @override
   Widget build(BuildContext context) {
+
     return Expanded(
+      flex: 8,
       child: ListView.builder(
-        itemCount: Note.length,
-        itemBuilder: (context, index) {
-
-          return  Card(
-            child: ListTile(
-                leading: Container(
-                  width: 35,
-                  height: 35,
-                  child: Center(
-                    child:  Image(
-                      image: AssetImage(AppImages.task),
-                    )
-                  ),
-                ),
-                // title: Text(Note.),
-                subtitle:
-                Text('Enter The End Date',),
-                trailing:Container(
-
-                ),
-              // isThreeLine: true,
-            ),
-          );
-      },
+        itemCount: writenote.length,
+        itemBuilder: (context, index) =>notes(index: index)
       ),
     );
-
-
 
   }
 }

@@ -25,10 +25,8 @@ class _regesterState extends State<regester> {
   XFile ? myPhoto ;
   // myPhoto = null ;
   Future<XFile?>   pickImage( ) async{
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-
+     ImagePicker picker = ImagePicker();
+     XFile? image = await picker.pickImage(source: ImageSource.gallery);
     return image;
   }
 
@@ -43,14 +41,17 @@ class _regesterState extends State<regester> {
        body: SingleChildScrollView(
          child: Padding(
            padding: const EdgeInsets.all(20),
+
            child: Column(
-
-
              children: [
 
 
+               SizedBox(height:MediaQuery.sizeOf(context).height*0.1,),
+
                Center(
-                 child: Image(image: AssetImage(AppImages.logo)),
+                 child: Image(image: AssetImage(AppImages.logo),height:
+                 248.67,
+                 width: 268,),
                ),
 
                SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
@@ -59,7 +60,12 @@ class _regesterState extends State<regester> {
 
                GestureDetector(
                  onTap: () {
+                   pickImage().then((value) {
+                     myPhoto = (value);
+                     setState(() {
 
+                     });
+                   });
                  },
                  child: Container(
                      height:MediaQuery.sizeOf(context).height*0.15,
@@ -78,8 +84,6 @@ class _regesterState extends State<regester> {
                  ),
 
 
-
-
                TextButton(
 
                  onPressed: ( ) {
@@ -91,94 +95,63 @@ class _regesterState extends State<regester> {
                    });
                  },
 
-                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update)),
-
-               Center(
-                 child: Form(
-                   key:formkey1,
-                   child: TextFormField(
-                     keyboardType: TextInputType.name,
-                     style: TextStyle(
-                       fontSize: 20,
-                       fontWeight: FontWeight.w600,
-
-                     ),
-                     decoration: InputDecoration(
-
-                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                       labelText: " Enter Your Name ",
-                       contentPadding: EdgeInsets.only(left: 20,top: 80,),
-                       hintText: "Your Name  ",
-                       labelStyle: TextStyle(fontSize: 20),
-                     ),
-
-
-                     onChanged: (value) {
-                       name=(value);
-                     },
-
-                     validator: (value) {
-                       if(value!.isEmpty==true){
-                         return "you should write your name";
-                       }else return null;
-                     },
-
-                   ),
-                 ),
+                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update)
                ),
 
-               // Container(
-               //   height:85 ,
-               //   width: 331,
-               //   decoration: BoxDecoration(
-               //     borderRadius: BorderRadius.circular(20),
-               //     border: Border.all(color: AppColors.blue)
-               //
-               //   ),
-               //   child: Column(
-               //     mainAxisAlignment: MainAxisAlignment.end,
-               //     crossAxisAlignment: CrossAxisAlignment.start,
-               //     children: [
-               //       Padding(
-               //         padding: const EdgeInsets.only(top: 10),
-               //         child: Column(
-               //           crossAxisAlignment: CrossAxisAlignment.start,
-               //           children: [
-               //
-               //             Form(
-               //               key:formkey1,
-               //               child: TextFormField(
-               //                 keyboardType: TextInputType.name,
-               //                 style: TextStyle(
-               //                    fontSize: 20,
-               //                   fontWeight: FontWeight.w600,
-               //
-               //                 ),
-               //                  decoration: InputDecoration(
-               //                    border: UnderlineInputBorder(borderRadius: BorderRadius.circular(20)),
-               //                      labelText: " Enter Your Name ",
-               //                    hintText: "Your Name  ",
-               //                    labelStyle: TextStyle(fontSize: 20),
-               //                  ),
-               //
-               //                 onChanged: (value) {
-               //                  name=(value);
-               //                 },
-               //
-               //                 validator: (value) {
-               //                   if(value!.isEmpty==true){
-               //                     return "you should write your name";
-               //                   }else return null;
-               //                 },
-               //
-               //               ),
-               //             ),
-               //           ],
-               //         ),
-               //       ),
-               //     ],
-               //   ),
-               // ),
+               Container(
+                 height:110 ,
+                 width: 331,
+                 decoration: BoxDecoration(
+                   borderRadius: BorderRadius.circular(20),
+                   border: Border.all(color: AppColors.blue)
+
+                 ),
+                 child: Column(
+                   children: [
+                     Padding(
+                       padding: const EdgeInsets.only(top:5),
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+
+                           Text("  Your Name :",style: TextStyle(fontSize: 14), ),
+
+                           Form(
+                             key:formkey1,
+                             child: TextFormField(
+
+                               keyboardType: TextInputType.name,
+                               style: TextStyle(
+                                  fontSize: 20,
+                                 fontWeight: FontWeight.w600,
+                               ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                  // disabledBorder: InputBorder.none,
+                                  hintText: " Enter Your Name  ",
+                                ),
+
+                               onChanged: (value) {
+                                name=(value);
+                               },
+                               //
+                               // validator: (value) {
+                               //   if(value!.isEmpty==true){
+                               //     return "you should write your name";
+                               //   }else return null;
+                               // },
+
+                             ),
+                           ),
+                         ],
+                       ),
+                     ),
+                   ],
+                 ),
+               ),
 
                SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
@@ -186,7 +159,7 @@ class _regesterState extends State<regester> {
                GestureDetector(
                  onTap: () {
 
-                   if(formkey1.currentState!.validate()==true){
+                   if(formkey1.currentState!.validate()==true&&myPhoto!=null){
                      Navigator.pushReplacement(context, MaterialPageRoute(
                        builder: (context) {
                          return homescreen(name,photo:myPhoto!.path) ;
