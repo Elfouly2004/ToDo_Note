@@ -6,17 +6,16 @@ import '../../Tasks/model/model.dart';
 
 
 class homebody extends StatefulWidget {
-  homebody({super.key,required this.startDate,required this.endDate});
-  final startDate;
-  final endDate;
+  homebody({super.key,required this.timer});
+  final timer;
+
   @override
-  State<homebody> createState() => _homebodyState(this.startDate,this.endDate);
+  State<homebody> createState() => _homebodyState(this.timer);
 }
 
 class _homebodyState extends State<homebody> {
-  final startDate;
-  final endDate;
-  _homebodyState(this.startDate,this.endDate);
+  final timer;
+  _homebodyState(this.timer);
   @override
   Widget build(BuildContext context) {
 
@@ -24,7 +23,7 @@ class _homebodyState extends State<homebody> {
       flex: 8,
       child: ListView.builder(
         itemCount: writenote.length,
-        itemBuilder: (context, index) =>notes(index: index,StartDate: startDate,EndDate: endDate,)
+        itemBuilder: (context, index) =>notes(index: index,time: timer,)
       ),
     );
 

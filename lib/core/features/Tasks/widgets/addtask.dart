@@ -57,6 +57,21 @@ class _addtaskState extends State<addtask> {
   }
 
 
+  TimeOfDay selectedTime = TimeOfDay.now();
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked_s = await showTimePicker(
+        context: context,
+        initialTime: selectedTime, builder: (BuildContext context, Widget? child) {
+      return MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+        child: child!,
+      );});
+    if (picked_s != null && picked_s != selectedTime )
+      setState(() {
+        selectedTime = picked_s;
+      });
+  }
+
 
   GlobalKey<FormState> formkey1= GlobalKey <FormState>();
   GlobalKey<FormState> formkey2= GlobalKey <FormState>();
@@ -65,6 +80,8 @@ class _addtaskState extends State<addtask> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+
+
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.white,
@@ -216,8 +233,23 @@ class _addtaskState extends State<addtask> {
                 ),
               ),
 
-              SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
+              SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
 
+              Card(
+                child: ListTile(
+                    leading: Image(image: AssetImage(AppImages.timelogo),),
+                    title: Text('Add Time'),
+                    subtitle:
+                    Text('Set a Time For The Task',),
+                    trailing: IconButton(
+                      onPressed: () => _selectTime(context),
+                      icon: Icon(Icons.arrow_drop_down_circle),
+                    )
+                  // isThreeLine: true,
+                ),
+              ),
+
+              SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
               GestureDetector(
                 onTap:() {
@@ -229,7 +261,7 @@ class _addtaskState extends State<addtask> {
                       descriptioncontroller.text='';
                       writenote.add(Notes(taskName:taskname, decsrption: description));
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo, SelectedDate1:selectedDate1,SelectedDate2: selectedDate2,) ,)).then((k){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo, selecttime: selectedTime,) ,)).then((k){
                         setState(() {
 
                         });

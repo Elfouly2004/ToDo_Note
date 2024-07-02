@@ -11,22 +11,21 @@ import 'package:flutter/cupertino.dart';
 class homescreen extends StatefulWidget {
   String name="";
   final String photo;
-  final  SelectedDate1;
-  final  SelectedDate2;
+  final  selecttime;
 
 
-  homescreen( this.name,{required this.photo,required this.SelectedDate1,required this.SelectedDate2});
+
+  homescreen( this.name,{required this.photo,required this.selecttime});
 
   @override
-  State<homescreen> createState() => _homescreenState(this.name,this.photo,this.SelectedDate1,this.SelectedDate2);
+  State<homescreen> createState() => _homescreenState(this.name,this.photo,this.selecttime);
 }
 
 class _homescreenState extends State<homescreen> {
   String name="";
   final String photo;
-  final  SelectedDate1;
-  final  SelectedDate2;
-  _homescreenState(this.name, this.photo, this.SelectedDate1,this.SelectedDate2);
+  final  selecttime;
+  _homescreenState(this.name, this.photo,this.selecttime);
   @override
   Widget build(BuildContext context) {
 
@@ -187,7 +186,7 @@ class _homescreenState extends State<homescreen> {
             child: const Text("No Notes Yet ",
               style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
           ):
-          homebody(startDate: SelectedDate1,endDate: SelectedDate2,),
+          homebody(timer: selecttime,),
 
 
 

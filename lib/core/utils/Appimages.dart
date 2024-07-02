@@ -9,7 +9,7 @@ class AppImages{
   static const String date = "assets/images/calendar.png";
   static const String back = "assets/images/Left.png";
   static const String task = "assets/images/briefcase.png";
-
+  static const String timelogo = "assets/images/fluent-emoji-flat_watch.png";
 
 
 

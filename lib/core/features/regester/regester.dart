@@ -162,7 +162,7 @@ class _regesterState extends State<regester> {
                    if(formkey1.currentState!.validate()==true&&myPhoto!=null){
                      Navigator.pushReplacement(context, MaterialPageRoute(
                        builder: (context) {
-                         return homescreen(name,photo:myPhoto!.path,SelectedDate1: null,SelectedDate2:null ,) ;
+                         return homescreen(name,photo:myPhoto!.path,selecttime: null ,) ;
                        },));
 
                    }
