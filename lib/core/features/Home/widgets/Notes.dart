@@ -6,18 +6,18 @@ import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
 import '../../Tasks/model/model.dart';
 class notes extends StatefulWidget {
-  const notes({required this.index,required this.time});
+  const notes({required this.index,required this.selecttime});
   final index;
-  final time;
+  final selecttime;
 
   @override
-  State<notes> createState() => _notesState(this.time);
+  State<notes> createState() => _notesState(this.selecttime);
 }
 
 class _notesState extends State<notes> {
   bool click = false;
-  final time;
-  _notesState(this.time);
+  final Selectedtime;
+  _notesState(this.Selectedtime);
   @override
   Widget build(BuildContext context) {
     return  Dismissible(
@@ -55,7 +55,7 @@ class _notesState extends State<notes> {
 
 
               title: Text("${writenote[widget.index].taskName}",style: TextStyle(fontWeight: FontWeight.w600),),
-              subtitle:Text("${time}",
+              subtitle:Text("$Selectedtime",
                 style:TextStyle(
                   color: Color(0xff90B6E2)
                 ) ,

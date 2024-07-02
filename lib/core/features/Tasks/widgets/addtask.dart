@@ -66,7 +66,7 @@ class _addtaskState extends State<addtask> {
         data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
         child: child!,
       );});
-    if (picked_s != null && picked_s != selectedTime )
+    if (picked_s != null && picked_s != selectedTime.format(context) )
       setState(() {
         selectedTime = picked_s;
       });
@@ -261,7 +261,9 @@ class _addtaskState extends State<addtask> {
                       descriptioncontroller.text='';
                       writenote.add(Notes(taskName:taskname, decsrption: description));
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo, selecttime: selectedTime,) ,)).then((k){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              homescreen(name, photo: photo, selecttime: selectedTime.format(context),) ,)).then((k){
                         setState(() {
 
                         });
@@ -296,10 +298,8 @@ class _addtaskState extends State<addtask> {
                   ),
                 ),
               ),
-              
-              // Text("${selectedDate1.day}-${selectedDate1.month}-${selectedDate1.year}",style: TextStyle(color: Colors.black),),
-              //
-              // Text("$selectedDate2")
+
+              // Text("${selectedTime.format(context)}")
               //
         
             ],
