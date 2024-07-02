@@ -99,8 +99,8 @@ class _homescreenState extends State<homescreen> {
       drawer: Drawer(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
+              topRight: Radius.circular(50),
+              bottomRight: Radius.circular(0)),
         ),
         surfaceTintColor: Colors.deepOrange,
         backgroundColor: Colors.white,
@@ -111,10 +111,32 @@ class _homescreenState extends State<homescreen> {
 
             Container(
               width: double.infinity,
-              height: MediaQuery.sizeOf(context).height*0.23,
+              height: MediaQuery.sizeOf(context).height*0.22,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: <Color>[AppColors.blue, AppColors.move]),
+              ),
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+
+                  CircleAvatar(
+
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundColor: Colors.white,
+                      backgroundImage: FileImage(File(photo)),
+                    ),
+                    radius: 40,
+                    foregroundColor: Colors.white ,
+                  ),
+
+                  Text("${name}",style: TextStyle(
+                      fontSize:20 ,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.white),),
+                ],
               ),
             ),
 
