@@ -25,30 +25,45 @@ class _addtaskState extends State<addtask> {
   String? description;
   TextEditingController namecontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
-  DateTime selectedDate = DateTime.now();
 
-
-  Future<void> _selectDate(BuildContext context) async {
+  DateTime selectedDate1 = DateTime.now();
+  Future<void> _selectDate1(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
+        initialDate: selectedDate1,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030));
+    if (picked != null && picked != selectedDate1) {
       setState(() {
-        selectedDate = picked;
+        selectedDate1 = picked;
       });
     }
   }
 
+
+
+  DateTime selectedDate2 = DateTime.now();
+  Future<void> _selectDate2(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate2,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030));
+    if (picked != null && picked != selectedDate2) {
+      setState(() {
+        selectedDate2 = picked;
+      });
+    }
+  }
+
+
+
   GlobalKey<FormState> formkey1= GlobalKey <FormState>();
   GlobalKey<FormState> formkey2= GlobalKey <FormState>();
 
-  void Function(String?)? onsaved;
-
   @override
   Widget build(BuildContext context) {
-    var index;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -177,7 +192,7 @@ class _addtaskState extends State<addtask> {
                     title: Text('Start Date'),
                     subtitle: Text('Enter The Start Date',),
                     trailing: IconButton(
-                      onPressed: () =>  _selectDate(context),
+                      onPressed: () =>  _selectDate1(context),
 
                       icon: Icon(Icons.arrow_drop_down_circle),
                     )
@@ -194,7 +209,7 @@ class _addtaskState extends State<addtask> {
                     subtitle:
                     Text('Enter The End Date',),
                     trailing: IconButton(
-                      onPressed: () => _selectDate(context),
+                      onPressed: () => _selectDate2(context),
                       icon: Icon(Icons.arrow_drop_down_circle),
                     )
                   // isThreeLine: true,
@@ -214,7 +229,7 @@ class _addtaskState extends State<addtask> {
                       descriptioncontroller.text='';
                       writenote.add(Notes(taskName:taskname, decsrption: description));
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo) ,)).then((k){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>homescreen(name, photo: photo, SelectedDate1:selectedDate1,SelectedDate2: selectedDate2,) ,)).then((k){
                         setState(() {
 
                         });
@@ -249,7 +264,11 @@ class _addtaskState extends State<addtask> {
                   ),
                 ),
               ),
-        
+              
+              // Text("${selectedDate1.day}-${selectedDate1.month}-${selectedDate1.year}",style: TextStyle(color: Colors.black),),
+              //
+              // Text("$selectedDate2")
+              //
         
             ],
           ),

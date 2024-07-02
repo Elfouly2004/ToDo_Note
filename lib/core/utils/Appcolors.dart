@@ -8,6 +8,8 @@ class AppColors{
   static const Color    camera = Color(0xff87B5E3);
   static const Color    Yourname = Color(0xff6E6A7C);
   static const Color    hello = Color(0xff306BA6);
+  static const Color    white = Color(0xffFFFFFF);
+
 
 
 

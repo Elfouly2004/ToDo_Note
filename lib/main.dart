@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:todo/core/utils/Apptexts.dart';
-
 import 'core/features/Boarding/onBoarding.dart';
 
 void main() async{
-  await Hive.initFlutter();
-  await Hive.openBox(AppTexts.NotesBox);
   runApp(const MyApp());
 }
 
@@ -20,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'ToDo App',
       debugShowCheckedModeBanner: false,
       home: onboarding(),
+      // theme: ThemeData(primarySwatch: Colors.blue),
     );
   }
 }

@@ -137,12 +137,12 @@ class _regesterState extends State<regester> {
                                onChanged: (value) {
                                 name=(value);
                                },
-                               //
-                               // validator: (value) {
-                               //   if(value!.isEmpty==true){
-                               //     return "you should write your name";
-                               //   }else return null;
-                               // },
+
+                               validator: (value) {
+                                 if(value!.isEmpty==true){
+                                   return "you should write your name";
+                                 }else return null;
+                               },
 
                              ),
                            ),
@@ -162,7 +162,7 @@ class _regesterState extends State<regester> {
                    if(formkey1.currentState!.validate()==true&&myPhoto!=null){
                      Navigator.pushReplacement(context, MaterialPageRoute(
                        builder: (context) {
-                         return homescreen(name,photo:myPhoto!.path) ;
+                         return homescreen(name,photo:myPhoto!.path,SelectedDate1: null,SelectedDate2:null ,) ;
                        },));
 
                    }

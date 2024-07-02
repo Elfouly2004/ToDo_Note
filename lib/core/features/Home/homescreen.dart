@@ -6,26 +6,35 @@ import 'package:intl/intl.dart';
 import 'package:todo/core/features/Home/widgets/homebody.dart';
 import '../Tasks/model/model.dart';
 import '../Tasks/widgets/addtask.dart';
+import 'package:flutter/cupertino.dart';
 
 class homescreen extends StatefulWidget {
   String name="";
   final String photo;
+  final  SelectedDate1;
+  final  SelectedDate2;
 
-  homescreen( this.name,{required this.photo});
+
+  homescreen( this.name,{required this.photo,required this.SelectedDate1,required this.SelectedDate2});
 
   @override
-  State<homescreen> createState() => _homescreenState(this.name,this.photo);
+  State<homescreen> createState() => _homescreenState(this.name,this.photo,this.SelectedDate1,this.SelectedDate2);
 }
 
 class _homescreenState extends State<homescreen> {
   String name="";
   final String photo;
-
-  _homescreenState(this.name, this.photo);
+  final  SelectedDate1;
+  final  SelectedDate2;
+  _homescreenState(this.name, this.photo, this.SelectedDate1,this.SelectedDate2);
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+
       appBar: AppBar(
 
 
@@ -168,45 +177,61 @@ class _homescreenState extends State<homescreen> {
 
 
       body: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
+
         children: [
 
-          writenote.isEmpty? const Text("No Notes Yet ",
-            style: TextStyle(fontSize: 40),): homebody(),
+             SizedBox(height: 20,),
+
+
+          writenote.isEmpty? Expanded(
+            child: const Text("No Notes Yet ",
+              style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
+          ):
+          homebody(startDate: SelectedDate1,endDate: SelectedDate2,),
 
 
 
 
-          Padding(
-            padding:  EdgeInsets.only( bottom:60),
-            child: Center(
-              child: GestureDetector(
-                onTap:  () {
+
+
+
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: FloatingActionButton(
+
+                shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)
+                ),
+
+                onPressed:  () {
                setState(() {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                    return addtask(
                      photo: photo,
                      name,
 
+
                    );
                  },));
                });
                 },
+
                 child: Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(colors: [
-                      AppColors.blue,
-                      AppColors.move
-                    ])
-                  ),
+                  width: 60,
+                  height: 60,
                   child: Icon(
                     Icons.add,
-                    color: Colors.white,
+                    size: 40,
+                    color:  Color(0xffFFFFFF),
+                  ),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(colors: [ AppColors.blue,
+                        AppColors.move,])
                   ),
                 ),
+
               ),
             ),
           )
