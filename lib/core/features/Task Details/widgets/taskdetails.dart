@@ -6,21 +6,20 @@ import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
-import '../model/model.dart';
 
-class addtask extends StatefulWidget {
- addtask(this.name,{required this.photo,});
-  String name="";
-  final String photo;
+class taskdetails extends StatefulWidget {
+
+  taskdetails({required this.index});
+  final index;
+
 
   @override
-  State<addtask> createState() => _addtaskState(this.name,this.photo);
+  State<taskdetails> createState() => _taskdetailsState(this.index);
 }
 
-class _addtaskState extends State<addtask> {
-  String name="";
-  final String photo;
-  _addtaskState(this.name,this.photo);
+class _taskdetailsState extends State<taskdetails> {
+  final index;
+  _taskdetailsState(this.index);
   String  ?taskname;
   String? description;
   TextEditingController namecontroller = TextEditingController();
@@ -86,13 +85,13 @@ class _addtaskState extends State<addtask> {
         toolbarHeight: 100,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("Add Task",
+        title: Text("Task details",
           textAlign: TextAlign.center,
-        style: TextStyle(),),
+          style: TextStyle(),),
         leading: GestureDetector(
-          onTap: () {
-          Navigator.pop(context);
-          },
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Image(image: AssetImage(AppImages.back),)),
 
 
@@ -105,7 +104,7 @@ class _addtaskState extends State<addtask> {
             children: [
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
-        
+
               Container(
                 height: 90,
                 width: 331,
@@ -118,41 +117,20 @@ class _addtaskState extends State<addtask> {
                   children: [
 
                     Text("Task Name",style: TextStyle(
-                          fontSize: 14
-                        ),),
+                        fontSize: 14
+                    ),),
+
+                    Text("${writenote[widget.index].taskName}",style: TextStyle(
+                        fontSize: 14,color: Color(0xff8E8E8E)
+                    ),),
 
 
-                     Form(
-                      key:formkey1,
-                      child: TextFormField(
-                        controller: namecontroller,
-                        keyboardType: TextInputType.name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
 
-                          hintText: " Enter The Task Name   ",
-                          hintStyle: TextStyle(fontSize: 15,color: Color(0xff6E6A7C)),
-                        ),
-                        validator: (value) {
-                          if(value!.isEmpty==true){
-                            return "you should write your task name";
-                          }else return null;
-                        },
-
-
-                      ),
-                    ),
                   ],
 
                 ),
               ),
-        
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
               Container(
@@ -170,44 +148,25 @@ class _addtaskState extends State<addtask> {
                         fontSize: 14
                     ),),
 
-                    Form(
-                      key:formkey2,
-                      child: TextFormField(
-                         controller: descriptioncontroller,
-                        keyboardType: TextInputType.name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          hintText: "Enter The Task Desciption    ",
-                          hintStyle: TextStyle(fontSize: 15,color: Color(0xff6E6A7C)),
-                        ),
 
-                        validator: (value) {
-                          if(value!.isEmpty==true){
-                            return "you should write your task name";
-                          }else return null;
-                        },
+                    Text("${writenote[widget.index].decsrption}",style: TextStyle(
+                        fontSize: 14,color: Color(0xff8E8E8E)
+                    ),),
 
-
-                      ),
-                    ),
                   ],
 
                 ),
               ),
-        
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
-        
+
               Card(
                 child: ListTile(
                     leading: Image(image: AssetImage(AppImages.date),),
                     title: Text('Start Date'),
-                    subtitle: Text('Enter The Start Date',),
+                    subtitle:   Text("${writenote[widget.index].starttask}",style: TextStyle(
+                        fontSize: 14
+                    ),),
                     trailing: IconButton(
                       onPressed: () =>  _selectDate1(context),
 
@@ -216,15 +175,17 @@ class _addtaskState extends State<addtask> {
                   // isThreeLine: true,
                 ),
               ),
-        
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
-        
+
               Card(
                 child: ListTile(
                     leading: Image(image: AssetImage(AppImages.date),),
                     title: Text('End Date'),
                     subtitle:
-                    Text('Enter The End Date',),
+                    Text("${writenote[widget.index].Endtask}",style: TextStyle(
+                        fontSize: 14
+                    ),),
                     trailing: IconButton(
                       onPressed: () => _selectDate2(context),
                       icon: Icon(Icons.arrow_drop_down_circle),
@@ -240,7 +201,7 @@ class _addtaskState extends State<addtask> {
                     leading: Image(image: AssetImage(AppImages.timelogo),),
                     title: Text('Add Time'),
                     subtitle:
-                    Text('Set a Time For The Task',),
+                    Text("${writenote[widget.index].selecttime}",),
                     trailing: IconButton(
                       onPressed: () => _selectTime(context),
                       icon: Icon(Icons.arrow_drop_down_circle),
@@ -253,11 +214,6 @@ class _addtaskState extends State<addtask> {
 
               GestureDetector(
                 onTap:() {
-
-
-                      // writenote.add(Notes(taskName:taskname, decsrption: description,selecttime:selectedTime.format(context),starttask: selectedDate1.timeZoneOffset,Endtask: selectedDate2.timeZoneOffset));
-
-
 
                 },
                 child: Container(
@@ -276,12 +232,66 @@ class _addtaskState extends State<addtask> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("${AppTexts.Addtask}",
+                      Text("${AppTexts.archive}",
                         style: TextStyle(fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.w900
                         )
                         ,textAlign: TextAlign.center,),
+
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image(image:AssetImage(AppImages.archive),height: 20,width: 20,),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
+
+
+              GestureDetector(
+                onTap:() {
+
+              setState(() {
+                writenote.remove(
+                    Notes(
+                        taskName:taskname,
+                        decsrption: description,
+                        selecttime:selectedTime.format(context),
+                        starttask: selectedDate1,
+                        Endtask: selectedDate2)
+                );
+
+              });
+                },
+                child: Container(
+                  height:52 ,
+                  width: 331,
+
+                  decoration: BoxDecoration(
+                     color: Color(0xffBD5461),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("${AppTexts. delete}",
+                        style: TextStyle(fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900
+                        )
+                        ,textAlign: TextAlign.center,),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image(image:AssetImage(AppImages.Delete),height: 20,width: 20,),
+                      )
+
+
+
                     ],
                   ),
                 ),
@@ -289,7 +299,7 @@ class _addtaskState extends State<addtask> {
 
               // Text("${selectedTime.format(context)}")
               //
-        
+
             ],
           ),
         ),

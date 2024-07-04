@@ -13,7 +13,11 @@ class AppTexts {
 
   static const String Addtask = "Add Task";
 
-   static const String NotesBox = "Notebox";
+  static const String delete = "Delete";
+
+  static const String archive = "Archive";
+
+  static const String NotesBox = "Notebox";
 
 
 

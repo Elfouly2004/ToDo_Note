@@ -1,3 +1,6 @@
+
+
+
 class AppImages{
   static const String Boarding = "assets/images/logo.png";
   static const String logo = "assets/images/logo2.png";
@@ -10,11 +13,8 @@ class AppImages{
   static const String back = "assets/images/Left.png";
   static const String task = "assets/images/briefcase.png";
   static const String timelogo = "assets/images/fluent-emoji-flat_watch.png";
-
-
-
-
-
+  static const String Archive = "assets/images/archive.png";
+  static const String Delete = "assets/images/del.png";
 
 
 }

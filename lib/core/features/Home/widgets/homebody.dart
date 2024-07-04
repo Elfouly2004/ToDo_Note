@@ -6,16 +6,15 @@ import '../../Tasks/model/model.dart';
 
 
 class homebody extends StatefulWidget {
-  homebody({super.key,required this.selecttime});
-  final selecttime;
+  homebody({super.key,});
+
 
   @override
-  State<homebody> createState() => _homebodyState(this.selecttime);
+  State<homebody> createState() => _homebodyState();
 }
 
 class _homebodyState extends State<homebody> {
-  final time;
-  _homebodyState(this.time);
+
   @override
   Widget build(BuildContext context) {
 
@@ -23,7 +22,7 @@ class _homebodyState extends State<homebody> {
       flex: 8,
       child: ListView.builder(
         itemCount: writenote.length,
-        itemBuilder: (context, index) =>notes(index: index,selecttime: time,)
+        itemBuilder: (context, index) =>notes(index: index,)
       ),
     );
 
