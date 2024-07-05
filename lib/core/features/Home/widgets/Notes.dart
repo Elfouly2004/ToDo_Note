@@ -7,16 +7,27 @@ import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
 import '../../Tasks/model/model.dart';
 class notes extends StatefulWidget {
-  const notes({required this.index,});
+  const notes(
+      {
+        required this.Photo,
+        required this.Name,
+        required this.Selected,
+        required this.index
+      });
   final index;
-
+final Photo;
+ final Name;
+ final  Selected;
   @override
-  State<notes> createState() => _notesState(this.index);
+  State<notes> createState() => _notesState(this.index,this.Name,this.Photo,this.Selected);
 }
 
 class _notesState extends State<notes> {
   final index;
-  _notesState(this.index);
+  final Photo;
+  final Name;
+  final  Selected;
+  _notesState(this.index,this.Name,this.Photo,this.Selected);
   bool click = false;
 
   @override
@@ -37,7 +48,7 @@ class _notesState extends State<notes> {
         child: GestureDetector(
           onTap: () {
             Navigator.push(context,MaterialPageRoute(builder: (context) {
-               return taskdetails(index:index ,);
+               return taskdetails(index:index,name:Name ,photo:Photo ,select:Selected ,);
             },));
           },
           child: Padding(

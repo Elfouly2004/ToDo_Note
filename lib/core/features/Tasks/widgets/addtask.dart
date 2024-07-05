@@ -254,10 +254,30 @@ class _addtaskState extends State<addtask> {
               GestureDetector(
                 onTap:() {
 
+                    String taskname = namecontroller.text.trim();
+                    String description =descriptioncontroller.text.trim();
+                    if(taskname.isNotEmpty&&description.isNotEmpty){
+                      namecontroller.text='';
+                      descriptioncontroller.text='';
+                      writenote.add(
+                          Notes(
+                          taskName:taskname,
+                          decsrption: description,
+                          selecttime:selectedTime.format(context),
+                          starttask: selectedDate1.toLocal(),
+                          Endtask: selectedDate2.toLocal()
+                          )
+                      );
 
-                      // writenote.add(Notes(taskName:taskname, decsrption: description,selecttime:selectedTime.format(context),starttask: selectedDate1.timeZoneOffset,Endtask: selectedDate2.timeZoneOffset));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              homescreen(name, photo: photo, selecttime: selectedTime.format(context),) ,)).then((k){
+                        setState(() {
 
+                        });
+                      });
 
+                    }
 
                 },
                 child: Container(

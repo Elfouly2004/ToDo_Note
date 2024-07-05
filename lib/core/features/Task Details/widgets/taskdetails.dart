@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/core/features/Home/homescreen.dart';
 import 'package:todo/core/features/Home/widgets/homebody.dart';
+import 'package:todo/core/features/Task%20Details/widgets/custom_dialog.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
@@ -9,17 +10,27 @@ import '../../../utils/Apptexts.dart';
 
 class taskdetails extends StatefulWidget {
 
-  taskdetails({required this.index});
+  taskdetails({
+    required this.index,
+    required this.name,
+    required this.photo,
+    required this.select,
+  });
   final index;
-
+  final name;
+  final photo;
+  final select;
 
   @override
-  State<taskdetails> createState() => _taskdetailsState(this.index);
+  State<taskdetails> createState() => _taskdetailsState(this.index,this.name,this.photo,this.select);
 }
 
 class _taskdetailsState extends State<taskdetails> {
   final index;
-  _taskdetailsState(this.index);
+  final name;
+  final photo;
+  final select;
+  _taskdetailsState(this.index,this.name,this.photo,this.select);
   String  ?taskname;
   String? description;
   TextEditingController namecontroller = TextEditingController();
@@ -183,7 +194,8 @@ class _taskdetailsState extends State<taskdetails> {
                     leading: Image(image: AssetImage(AppImages.date),),
                     title: Text('End Date'),
                     subtitle:
-                    Text("${writenote[widget.index].Endtask}",style: TextStyle(
+                    Text("${writenote[widget.index].Endtask}",
+                      style: TextStyle(
                         fontSize: 14
                     ),),
                     trailing: IconButton(
@@ -255,17 +267,16 @@ class _taskdetailsState extends State<taskdetails> {
               GestureDetector(
                 onTap:() {
 
-              setState(() {
-                writenote.remove(
-                    Notes(
-                        taskName:taskname,
-                        decsrption: description,
-                        selecttime:selectedTime.format(context),
-                        starttask: selectedDate1,
-                        Endtask: selectedDate2)
-                );
+                  showDialog(context: context,
+                    builder:
+                        (context) {
+                      return customdialog(index: index,select: select,photo: photo,name: name,);
+                    },
+                  );
 
-              });
+
+
+
                 },
                 child: Container(
                   height:52 ,

@@ -208,7 +208,7 @@ class _homescreenState extends State<homescreen> {
             child: const Text("No Notes Yet ",
               style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
           ):
-          homebody(),
+          homebody(name: name,photo: photo,selected: selecttime,),
 
 
 
