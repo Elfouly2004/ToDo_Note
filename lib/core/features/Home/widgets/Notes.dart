@@ -33,7 +33,11 @@ class _notesState extends State<notes> {
   @override
   Widget build(BuildContext context) {
     return  Dismissible(
-
+        onDismissed: (DismissDirection direction) {
+          setState(() {
+            writenote.removeAt(index+1);
+          });
+        },
       direction: DismissDirection.startToEnd,
       background: Container(
         child: Icon(Icons.delete_forever_sharp),

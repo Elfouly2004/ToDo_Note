@@ -10,19 +10,22 @@ import '../../../utils/Apptexts.dart';
 
 class taskdetails extends StatefulWidget {
 
-  taskdetails({
+  taskdetails(
+      {
     required this.index,
     required this.name,
     required this.photo,
     required this.select,
-  });
+  }
+  );
   final index;
   final name;
   final photo;
   final select;
 
   @override
-  State<taskdetails> createState() => _taskdetailsState(this.index,this.name,this.photo,this.select);
+  State<taskdetails> createState() =>
+      _taskdetailsState(this.index,this.name,this.photo,this.select);
 }
 
 class _taskdetailsState extends State<taskdetails> {
@@ -31,8 +34,7 @@ class _taskdetailsState extends State<taskdetails> {
   final photo;
   final select;
   _taskdetailsState(this.index,this.name,this.photo,this.select);
-  String  ?taskname;
-  String? description;
+
   TextEditingController namecontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
 
@@ -226,7 +228,33 @@ class _taskdetailsState extends State<taskdetails> {
 
               GestureDetector(
                 onTap:() {
+               setState(() {
 
+                 Navigator.push(context,MaterialPageRoute(
+                   builder: (context) => homescreen(
+                       name,
+                       photo: photo,
+                       selecttime: selectedTime
+                   ),
+                 )
+                 );
+                 Archivelist.add(
+                     Notes(
+                         taskName:writenote[ widget.index].taskName,
+                         decsrption: writenote[ widget.index].decsrption,
+                         selecttime:selectedTime.format(context),
+                         starttask: selectedDate1.toLocal(),
+                         Endtask: selectedDate2.toLocal()
+                     )
+                 );
+
+                 // writenote.removeAt(widget.index);
+
+
+
+
+
+                  });
                 },
                 child: Container(
                   height:52 ,
@@ -260,6 +288,8 @@ class _taskdetailsState extends State<taskdetails> {
                   ),
                 ),
               ),
+
+
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
 
@@ -308,7 +338,7 @@ class _taskdetailsState extends State<taskdetails> {
                 ),
               ),
 
-              // Text("${selectedTime.format(context)}")
+              // Text("${taskname}", style: TextStyle( fontSize: 20),)
               //
 
             ],

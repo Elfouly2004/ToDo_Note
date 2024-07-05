@@ -15,6 +15,7 @@ class AppImages{
   static const String timelogo = "assets/images/fluent-emoji-flat_watch.png";
   static const String Archive = "assets/images/archive.png";
   static const String Delete = "assets/images/del.png";
+  static const String archivedtask = "assets/images/Group 239157.png";
 
 
 }

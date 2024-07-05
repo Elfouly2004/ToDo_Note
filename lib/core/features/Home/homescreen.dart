@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:todo/core/features/archive%20tasks/archivescreen.dart';
 import 'package:todo/core/utils/Appcolors.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import 'package:intl/intl.dart';
@@ -144,7 +145,7 @@ class _homescreenState extends State<homescreen> {
 
             GestureDetector(
               onTap: () {
-
+             Navigator.push(context,MaterialPageRoute(builder:   (context) => archivescreen(),));
               },
               child: Container(
                 height:48 ,
@@ -160,7 +161,7 @@ class _homescreenState extends State<homescreen> {
                 ),
                 child: Center(
                   child: Center(
-                    child:  Image.asset(AppImages.archive,width: 150,),
+                    child:  Image.asset(AppImages.archivedtask,width: 150,),
                   )
                 ),
               ),
