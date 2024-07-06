@@ -1,7 +1,4 @@
 
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-
 
 
 class Notes {
@@ -10,6 +7,7 @@ class Notes {
   final starttask;
   final Endtask;
   final selecttime;
+  final done;
 
 
   Notes(
@@ -19,12 +17,16 @@ class Notes {
     required  this.starttask,
     required  this. Endtask,
     required  this. selecttime,
+        this.done=false,
+
 
      }
      );
 }
 
+  List<Notes> writenote =[];
 
-List<Notes> writenote = List.empty(growable: true);
+    List<Notes> Archivelist =[];
 
-List<Notes> Archivelist = List.empty(growable: true);
+     List<Notes> Done =[];
+

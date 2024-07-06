@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:todo/core/features/archive%20tasks/widgets/archivebody.dart';
+import 'package:todo/core/features/Donetask/widgets/donebody.dart';
 import 'package:todo/core/utils/Apptexts.dart';
 
 import '../../utils/Appimages.dart';
 
-class archivescreen extends StatelessWidget {
-  const archivescreen({super.key});
+class donescreen extends StatelessWidget {
+  const donescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class archivescreen extends StatelessWidget {
         toolbarHeight: 100,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("${AppTexts.archive}",
+        title: Text("${AppTexts.Donetasks}",
           textAlign: TextAlign.center,
           style: TextStyle(),),
         leading: GestureDetector(
@@ -26,7 +26,7 @@ class archivescreen extends StatelessWidget {
 
       ),
 
-      body: archivebody(),
+      body: doneebody(),
 
 
     );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:todo/core/features/Task%20Details/widgets/taskdetails.dart';
+import 'package:todo/core/utils/Apptexts.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
@@ -90,19 +91,21 @@ class _notesState extends State<notes> {
                   onTap: () {
                      setState(() {
 
+
                      });
                  click=!click;
+
                   },
 
                   child: Container(
                     width: 60,
                     height: 28,
                     child: Center(
-                        child:  click ? Text("Done",
+                        child:  click ? Text("${AppTexts.done}",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 15,color: Color(0xffFFFFFF)),
 
-                    ) : GradientText("Done",style: TextStyle(fontSize:15,fontWeight: FontWeight.w900 ), colors: [
+                    ) : GradientText("${AppTexts.done}",style: TextStyle(fontSize:15,fontWeight: FontWeight.w900 ), colors: [
                           AppColors.blue,
                           AppColors.move,
                         ]

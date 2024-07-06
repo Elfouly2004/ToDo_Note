@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:todo/core/features/Donetask/donescreen.dart';
 import 'package:todo/core/features/archive%20tasks/archivescreen.dart';
 import 'package:todo/core/utils/Appcolors.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import 'package:intl/intl.dart';
 import 'package:todo/core/features/Home/widgets/homebody.dart';
+import 'package:todo/core/utils/Apptexts.dart';
 import '../Tasks/model/model.dart';
 import '../Tasks/widgets/addtask.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,7 +65,7 @@ class _homescreenState extends State<homescreen> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Hello!",style: TextStyle(
+            Text("${AppTexts.hello}",style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
                 color: AppColors.hello),),
@@ -171,6 +173,7 @@ class _homescreenState extends State<homescreen> {
 
             GestureDetector(
               onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder:   (context) => donescreen(),));
 
               },
               child: Container(
@@ -206,7 +209,7 @@ class _homescreenState extends State<homescreen> {
 
 
           writenote.isEmpty? Expanded(
-            child: const Text("No Notes Yet ",
+            child: const Text("${AppTexts.nonote} ",
               style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
           ):
           homebody(name: name,photo: photo,selected: selecttime,),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/core/features/Home/homescreen.dart';
 
 import '../../../utils/Appcolors.dart';
+import '../../../utils/Apptexts.dart';
 import '../../Tasks/model/model.dart';
 
 class customdialog extends StatefulWidget {
@@ -33,7 +34,7 @@ class _customdialogState extends State<customdialog> {
   @override
   Widget build(BuildContext context) {
     return  AlertDialog(
-      title: Text(' Are you sure you want to delete this task? '),
+      title: Text("${AppTexts.questiondelete}"),
 
       actions: [
 
@@ -58,7 +59,7 @@ class _customdialogState extends State<customdialog> {
                       borderRadius: BorderRadius.circular(10)
                   ),
                   child: Center(
-                    child: Text("Yes",textAlign: TextAlign.center,
+                    child: Text("${AppTexts.yes}",textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.white,
                           fontSize: 20
@@ -88,7 +89,7 @@ class _customdialogState extends State<customdialog> {
                       borderRadius: BorderRadius.circular(10)
                   ),
                   child:Center(
-                    child: Text("No",
+                    child: Text("${AppTexts.no}",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: AppColors.white,

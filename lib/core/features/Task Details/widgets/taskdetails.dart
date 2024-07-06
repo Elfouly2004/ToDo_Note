@@ -98,7 +98,7 @@ class _taskdetailsState extends State<taskdetails> {
         toolbarHeight: 100,
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text("Task details",
+        title: Text("${AppTexts.taskdetails}",
           textAlign: TextAlign.center,
           style: TextStyle(),),
         leading: GestureDetector(
@@ -129,7 +129,7 @@ class _taskdetailsState extends State<taskdetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("Task Name",style: TextStyle(
+                    Text("${AppTexts.taskname}",style: TextStyle(
                         fontSize: 14
                     ),),
 
@@ -157,7 +157,7 @@ class _taskdetailsState extends State<taskdetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("Description",style: TextStyle(
+                    Text("${AppTexts.Description}",style: TextStyle(
                         fontSize: 14
                     ),),
 
@@ -176,7 +176,7 @@ class _taskdetailsState extends State<taskdetails> {
               Card(
                 child: ListTile(
                     leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text('Start Date'),
+                    title: Text("${AppTexts.StartDate}"),
                     subtitle:   Text("${writenote[widget.index].starttask}",style: TextStyle(
                         fontSize: 14
                     ),),
@@ -194,7 +194,7 @@ class _taskdetailsState extends State<taskdetails> {
               Card(
                 child: ListTile(
                     leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text('End Date'),
+                    title: Text("${AppTexts.EndtDate}"),
                     subtitle:
                     Text("${writenote[widget.index].Endtask}",
                       style: TextStyle(
@@ -213,7 +213,7 @@ class _taskdetailsState extends State<taskdetails> {
               Card(
                 child: ListTile(
                     leading: Image(image: AssetImage(AppImages.timelogo),),
-                    title: Text('Add Time'),
+                    title: Text("${AppTexts.AddTime}"),
                     subtitle:
                     Text("${writenote[widget.index].selecttime}",),
                     trailing: IconButton(
@@ -229,6 +229,9 @@ class _taskdetailsState extends State<taskdetails> {
               GestureDetector(
                 onTap:() {
                setState(() {
+
+                 writenote.removeAt(index);
+
 
                  Navigator.push(context,MaterialPageRoute(
                    builder: (context) => homescreen(
@@ -248,7 +251,7 @@ class _taskdetailsState extends State<taskdetails> {
                      )
                  );
 
-                 // writenote.removeAt(widget.index);
+
 
 
 

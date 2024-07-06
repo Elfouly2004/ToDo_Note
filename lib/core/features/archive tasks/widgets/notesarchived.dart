@@ -3,19 +3,21 @@ import 'package:todo/core/features/Tasks/model/model.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
+import '../../../utils/Apptexts.dart';
 
 class archivenotes extends StatefulWidget {
-  const archivenotes({required this.index});
+  const archivenotes({required this.index,required this.onTap});
   final index;
+  final void Function()?onTap;
 
   @override
-  State<archivenotes> createState() => _archivenotesState(this.index);
+  State<archivenotes> createState() => _archivenotesState(this.index,this.onTap);
 }
 
 class _archivenotesState extends State<archivenotes> {
   final index;
-
-  _archivenotesState(this.index);
+  final void Function()?onTap;
+  _archivenotesState(this.index,this.onTap);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,15 +51,33 @@ class _archivenotesState extends State<archivenotes> {
           ),
 
 
-          // trailing: GestureDetector(
-          //   onTap: () {
-          //
-          //
-          //   },
-          //
-          //   child: Container()
-          //
-          // ),
+          trailing: GestureDetector(
+            onTap: onTap,
+
+            child: Container(
+              height:30 ,
+              width:77,
+
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [
+                        AppColors.blue,
+                        AppColors.move,
+                      ]
+                  ),
+                  borderRadius: BorderRadius.circular(6)
+              ),
+              child: Center(
+                child: Text("${AppTexts.unarchive}",
+                  style: TextStyle(fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900
+                  )
+                  ,textAlign: TextAlign.center,),
+              ),
+            )
+
+          ),
         ),
       ),
     );
