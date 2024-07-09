@@ -90,6 +90,8 @@ class _taskdetailsState extends State<taskdetails> {
 
   @override
   Widget build(BuildContext context) {
+    // List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
+
 
     return Scaffold(
 
@@ -230,7 +232,9 @@ class _taskdetailsState extends State<taskdetails> {
                 onTap:() {
                setState(() {
 
-                 writenote.removeAt(index);
+
+
+
 
 
                  Navigator.push(context,MaterialPageRoute(
@@ -241,23 +245,26 @@ class _taskdetailsState extends State<taskdetails> {
                    ),
                  )
                  );
-                 Archivelist.add(
-                     Notes(
-                         taskName:writenote[ widget.index].taskName,
-                         decsrption: writenote[ widget.index].decsrption,
-                         selecttime:selectedTime.format(context),
-                         starttask: selectedDate1.toLocal(),
-                         Endtask: selectedDate2.toLocal()
-                     )
-                 );
+
+                 writenote[widget.index].archive=true;
+
+                       // writenote.removeAt(index);
+
+                 // Archivelist.add(
+                 //     Notes(
+                 //         taskName:writenote[ widget.index].taskName,
+                 //         decsrption: writenote[ widget.index].decsrption,
+                 //         selecttime:selectedTime.format(context),
+                 //         starttask: selectedDate1.toString().split(" ")[0],
+                 //         Endtask: selectedDate2.toString().split(" ")[0]
+                 //     )
+                 // );
 
 
+               //  List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
 
 
-
-
-
-                  });
+               });
                 },
                 child: Container(
                   height:52 ,
@@ -291,8 +298,6 @@ class _taskdetailsState extends State<taskdetails> {
                   ),
                 ),
               ),
-
-
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
 
@@ -341,8 +346,6 @@ class _taskdetailsState extends State<taskdetails> {
                 ),
               ),
 
-              // Text("${taskname}", style: TextStyle( fontSize: 20),)
-              //
 
             ],
           ),

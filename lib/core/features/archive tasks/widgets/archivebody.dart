@@ -12,18 +12,19 @@ class archivebody extends StatefulWidget {
 class _archivebodyState extends State<archivebody> {
   @override
   Widget build(BuildContext context) {
+    List<Notes> Archivelist =writenote.where((Notes)=>Notes. archive==true).toList();
+
     return Expanded(
       flex: 8,
       child: ListView.builder(
         itemCount: Archivelist.length,
-        itemBuilder: (context, index) => archivenotes(
-          index: index,
-          onTap: () {
+        itemBuilder: (context, index) => archivenotes(index: index, onTap:() {
             setState(() {
-              // Create a new list excluding the item to be removed
-              Archivelist.removeAt(index);
+              // Archivelist.removeAt(index);
+              // writenote[index].archive=false;
             });
           },
+
         ),
       ),
     );

@@ -209,7 +209,7 @@ class _addtaskState extends State<addtask> {
                     title: Text('Start Date'),
                     subtitle: Text('Enter The Start Date',),
                     trailing: IconButton(
-                      onPressed: () =>  _selectDate1(context),
+                      onPressed: () =>  _selectDate1(context).toString().split("")[0],
 
                       icon: Icon(Icons.arrow_drop_down_circle),
                     )
@@ -226,7 +226,7 @@ class _addtaskState extends State<addtask> {
                     subtitle:
                     Text('Enter The End Date',),
                     trailing: IconButton(
-                      onPressed: () => _selectDate2(context),
+                      onPressed: () => _selectDate2(context).toString().split("")[0],
                       icon: Icon(Icons.arrow_drop_down_circle),
                     )
                   // isThreeLine: true,
@@ -264,14 +264,15 @@ class _addtaskState extends State<addtask> {
                           taskName:taskname,
                           decsrption: description,
                           selecttime:selectedTime.format(context),
-                          starttask: selectedDate1.toLocal(),
-                          Endtask: selectedDate2.toLocal()
+                          starttask: selectedDate1.toString().split(" ")[0],
+                          Endtask: selectedDate2.toString().split(" ")[0],
                           )
                       );
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) =>
-                              homescreen(name, photo: photo, selecttime: selectedTime.format(context),) ,)).then((k){
+                              homescreen(name, photo: photo,
+                                selecttime: selectedTime.format(context),) ,)).then((k){
                         setState(() {
 
                         });

@@ -7,8 +7,8 @@ class Notes {
   final starttask;
   final Endtask;
   final selecttime;
-  final done;
-
+  bool done;
+  bool archive;
 
   Notes(
       {
@@ -18,6 +18,7 @@ class Notes {
     required  this. Endtask,
     required  this. selecttime,
         this.done=false,
+        this.archive=false,
 
 
      }
@@ -26,7 +27,9 @@ class Notes {
 
   List<Notes> writenote =[];
 
-    List<Notes> Archivelist =[];
+// List<Notes> Done =[];
+//
+// List<Notes> Archivelist =[];
 
-     List<Notes> Done =[];
+
 

@@ -10,35 +10,31 @@ import '../../Tasks/model/model.dart';
 class notes extends StatefulWidget {
   const notes(
       {
-        required this.Photo,
-        required this.Name,
-        required this.Selected,
-        required this.index
+        required this.Photo, required this.Name,
+        required this.Selected, required this.index,
+        required this.onDismissed
       });
-  final index;
-final Photo;
- final Name;
- final  Selected;
+
+
+  final index;final Photo;
+ final Name;final  Selected;
+  final void Function(DismissDirection)? onDismissed;
   @override
-  State<notes> createState() => _notesState(this.index,this.Name,this.Photo,this.Selected);
+  State<notes> createState() => _notesState(this.index,this.Name,this.Photo,this.Selected,this.onDismissed);
 }
 
 class _notesState extends State<notes> {
-  final index;
-  final Photo;
-  final Name;
-  final  Selected;
-  _notesState(this.index,this.Name,this.Photo,this.Selected);
-  bool click = false;
+  final index;final Photo;final Name;
+  final  Selected;final onDismissed;
+  _notesState(this.index,this.Name,this.Photo,this.Selected,this.onDismissed);
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return  Dismissible(
-        onDismissed: (DismissDirection direction) {
-          setState(() {
-            writenote.removeAt(index+1);
-          });
-        },
+        onDismissed:onDismissed,
       direction: DismissDirection.startToEnd,
       background: Container(
         child: Icon(Icons.delete_forever_sharp),
@@ -91,9 +87,9 @@ class _notesState extends State<notes> {
                   onTap: () {
                      setState(() {
 
-
+                       writenote[widget.index].done=!writenote[widget.index].done;
                      });
-                 click=!click;
+
 
                   },
 
@@ -101,7 +97,7 @@ class _notesState extends State<notes> {
                     width: 60,
                     height: 28,
                     child: Center(
-                        child:  click ? Text("${AppTexts.done}",
+                        child:  writenote[widget.index].done ? Text("${AppTexts.done}",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 15,color: Color(0xffFFFFFF)),
 
@@ -113,8 +109,8 @@ class _notesState extends State<notes> {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: click? Color(0xffFFFFFF):Color(0xff90B6E2)),
-                      gradient: LinearGradient(colors:click? [
+                      border: Border.all(color: writenote[widget.index].done? Color(0xffFFFFFF):Color(0xff90B6E2)),
+                      gradient: LinearGradient(colors:writenote[widget.index].done? [
                             AppColors.blue,
                             AppColors.move,
                           ]: [ AppColors.white, AppColors.white,]

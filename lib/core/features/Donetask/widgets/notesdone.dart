@@ -3,17 +3,18 @@ import 'package:todo/core/features/Tasks/model/model.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
-import '../../../utils/Apptexts.dart';
 
 class donenotes extends StatefulWidget {
   const donenotes({required this.index});
   final index;
+
 
   @override
   State<donenotes> createState() => _donenotesState(this.index);
 }
 
 class _donenotesState extends State<donenotes> {
+  List<Notes> Done =writenote.where((Notes)=>Notes.done==true).toList();
   final index;
 
   _donenotesState(this.index);
@@ -51,10 +52,11 @@ class _donenotesState extends State<donenotes> {
 
 
           trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("${Done[widget.index].starttask}"),
-
-              Text("${Done[widget.index].Endtask}"),
+              Text("${Done[widget.index].starttask.toString().split(" ")[0]}",style: TextStyle(color: Color(0xff24252C),fontSize: 15),),
+                SizedBox(height: 10,),
+              Text("${Done[widget.index].Endtask.toString().split(" ")[0]}",style: TextStyle(color: Color(0xff24252C),fontSize: 15)),
 
 
             ],

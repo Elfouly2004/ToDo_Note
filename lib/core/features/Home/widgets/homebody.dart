@@ -29,7 +29,11 @@ class _homebodyState extends State<homebody> {
       flex: 8,
       child: ListView.builder(
         itemCount: writenote.length,
-        itemBuilder: (context, index) =>notes(index: index,Name:name  ,Photo:photo ,Selected: selected,)
+        itemBuilder: (context, index) =>notes(index: index,Name:name  ,Photo:photo ,Selected: selected,onDismissed: (p0) {
+          setState(() {
+            writenote.removeAt(index);
+          });
+        },)
       ),
     );
 

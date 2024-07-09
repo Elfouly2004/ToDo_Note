@@ -7,8 +7,10 @@ class doneebody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Notes> Done =writenote.where((Notes)=>Notes.done==true).toList();
+
     return Expanded(
-      flex: 8,
+
       child: ListView.builder(
         itemCount: Done.length,
         itemBuilder: (context, index)=>donenotes(index: index,),

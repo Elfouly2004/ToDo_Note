@@ -15,8 +15,11 @@ class archivenotes extends StatefulWidget {
 }
 
 class _archivenotesState extends State<archivenotes> {
+
+  List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
+
   final index;
-  final void Function()?onTap;
+  final onTap;
   _archivenotesState(this.index,this.onTap);
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,8 @@ class _archivenotesState extends State<archivenotes> {
             height: 40,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
+                    colors:
+                    [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
                 )  ,
                 borderRadius: BorderRadius.circular(10)
             ),
