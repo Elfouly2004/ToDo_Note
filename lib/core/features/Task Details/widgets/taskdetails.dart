@@ -90,7 +90,7 @@ class _taskdetailsState extends State<taskdetails> {
 
   @override
   Widget build(BuildContext context) {
-    // List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
+    List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
 
 
     return Scaffold(
@@ -234,9 +234,6 @@ class _taskdetailsState extends State<taskdetails> {
 
 
 
-
-
-
                  Navigator.push(context,MaterialPageRoute(
                    builder: (context) => homescreen(
                        name,
@@ -248,17 +245,17 @@ class _taskdetailsState extends State<taskdetails> {
 
                  writenote[widget.index].archive=true;
 
-                       // writenote.removeAt(index);
 
-                 // Archivelist.add(
-                 //     Notes(
-                 //         taskName:writenote[ widget.index].taskName,
-                 //         decsrption: writenote[ widget.index].decsrption,
-                 //         selecttime:selectedTime.format(context),
-                 //         starttask: selectedDate1.toString().split(" ")[0],
-                 //         Endtask: selectedDate2.toString().split(" ")[0]
-                 //     )
-                 // );
+                 Archivelist.add(Notes(
+                   taskName: writenote[widget.index].taskName,
+                   decsrption: writenote[widget.index].decsrption,
+                   selecttime: selectedTime.format(context),
+                   starttask: selectedDate1.toString().split(" ")[0],
+                   Endtask: selectedDate2.toString().split(" ")[0],
+                   archive: true,
+                 ));
+
+                 // writenote.removeAt(widget.index);
 
 
                //  List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();

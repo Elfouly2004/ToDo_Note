@@ -9,18 +9,14 @@ import '../../../utils/Apptexts.dart';
 import '../model/model.dart';
 
 class addtask extends StatefulWidget {
- addtask(this.name,{required this.photo,});
-  String name="";
-  final String photo;
+ addtask();
 
   @override
-  State<addtask> createState() => _addtaskState(this.name,this.photo);
+  State<addtask> createState() => _addtaskState();
 }
 
 class _addtaskState extends State<addtask> {
-  String name="";
-  final String photo;
-  _addtaskState(this.name,this.photo);
+
   String  ?taskname;
   String? description;
   TextEditingController namecontroller = TextEditingController();
@@ -125,6 +121,9 @@ class _addtaskState extends State<addtask> {
                      Form(
                       key:formkey1,
                       child: TextFormField(
+                        onTapOutside: (event) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
                         controller: namecontroller,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
@@ -173,6 +172,9 @@ class _addtaskState extends State<addtask> {
                     Form(
                       key:formkey2,
                       child: TextFormField(
+                        onTapOutside: (event) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        },
                          controller: descriptioncontroller,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
@@ -268,16 +270,20 @@ class _addtaskState extends State<addtask> {
                           Endtask: selectedDate2.toString().split(" ")[0],
                           )
                       );
+                      //
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) =>
+                      //         homescreen(name, photo: photo,
+                      //           selecttime: selectedTime.format(context),) ,)).then((k){
+                      //   setState(() {
+                      //
+                      //   });
+                      // });
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>
-                              homescreen(name, photo: photo,
-                                selecttime: selectedTime.format(context),) ,)).then((k){
-                        setState(() {
+                      Navigator.pop(context);
 
-                        });
-                      });
-
+                    }else{
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("you should write task")));
                     }
 
                 },

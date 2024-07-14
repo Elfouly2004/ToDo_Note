@@ -11,14 +11,20 @@ class notes extends StatefulWidget {
   const notes(
       {
         required this.Photo, required this.Name,
-        required this.Selected, required this.index,
-        required this.onDismissed
+        required this.Selected, required this.index, required this.onDismissed,
+        // required this.title,
+        // required this.subtitle
       });
 
 
-  final index;final Photo;
- final Name;final  Selected;
+  final index;
+  final Photo;
+ final Name;
+ final  Selected;
   final void Function(DismissDirection)? onDismissed;
+  // final String title;
+  // final String subtitle;
+
   @override
   State<notes> createState() => _notesState(this.index,this.Name,this.Photo,this.Selected,this.onDismissed);
 }
@@ -26,12 +32,16 @@ class notes extends StatefulWidget {
 class _notesState extends State<notes> {
   final index;final Photo;final Name;
   final  Selected;final onDismissed;
-  _notesState(this.index,this.Name,this.Photo,this.Selected,this.onDismissed);
+  // final String title;
+  // final String subtitle;
 
+  _notesState(this.index,this.Name,this.Photo,this.Selected,this.onDismissed);
 
 
   @override
   Widget build(BuildContext context) {
+    List<Notes> homelist =writenote.where((Notes)=>Notes.archive==false).toList();
+
 
     return  Dismissible(
         onDismissed:onDismissed,
@@ -88,6 +98,8 @@ class _notesState extends State<notes> {
                      setState(() {
 
                        writenote[widget.index].done=!writenote[widget.index].done;
+
+
                      });
 
 

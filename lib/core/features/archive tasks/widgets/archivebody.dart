@@ -20,8 +20,9 @@ class _archivebodyState extends State<archivebody> {
         itemCount: Archivelist.length,
         itemBuilder: (context, index) => archivenotes(index: index, onTap:() {
             setState(() {
-              // Archivelist.removeAt(index);
-              // writenote[index].archive=false;
+              Archivelist[index].archive = false;
+              writenote[writenote.indexOf(Archivelist[index])].archive = false;
+              Archivelist.removeAt(index);
             });
           },
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo/core/features/Donetask/donescreen.dart';
 import 'package:todo/core/features/archive%20tasks/archivescreen.dart';
 import 'package:todo/core/utils/Appcolors.dart';
@@ -28,7 +29,11 @@ class _homescreenState extends State<homescreen> {
   String name="";
   final String photo;
   final  selecttime;
+
   _homescreenState(this.name, this.photo,this.selecttime);
+
+  bool theme=false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -112,6 +117,7 @@ class _homescreenState extends State<homescreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
+
             Container(
               width: double.infinity,
               height: MediaQuery.sizeOf(context).height*0.22,
@@ -144,6 +150,18 @@ class _homescreenState extends State<homescreen> {
             ),
 
             SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
+
+
+
+            Switch(value:theme=!theme,
+              onChanged: (value) {
+              Get.isDarkMode?Get.changeTheme(
+                  ThemeData.light()):Get.changeTheme(ThemeData.dark());
+            },
+            ),
+
+            SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
+
 
             GestureDetector(
               onTap: () {
@@ -209,8 +227,10 @@ class _homescreenState extends State<homescreen> {
 
 
           writenote.isEmpty? Expanded(
-            child: const Text("${AppTexts.nonote} ",
-              style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
+            child: Center(
+              child: const Text("${AppTexts.nonote} ",
+                style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
+            ),
           ):
           homebody(name: name,photo: photo,selected: selecttime,),
 
@@ -233,12 +253,14 @@ class _homescreenState extends State<homescreen> {
                setState(() {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                    return addtask(
-                     photo: photo,
-                     name,
-
+                     
 
                    );
-                 },));
+                 },)).then((k){
+      setState(() {
+
+      });
+    });;
                });
                 },
 
