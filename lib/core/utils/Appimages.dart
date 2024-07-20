@@ -16,6 +16,13 @@ class AppImages{
   static const String Archive = "assets/images/archive.png";
   static const String Delete = "assets/images/del.png";
   static const String archivedtask = "assets/images/Group 239157.png";
+  static const String archiveddark= "assets/images/archivedark.png";
+  static const String Donedark = "assets/images/donedark.png";
+  static const String moon = "assets/images/moon-icon.png";
+  static const String Sun = "assets/images/sun.png";
+
+
+
 
 
 }

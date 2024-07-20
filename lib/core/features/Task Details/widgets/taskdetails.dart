@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Home/homescreen.dart';
-import 'package:todo/core/features/Home/widgets/homebody.dart';
 import 'package:todo/core/features/Task%20Details/widgets/custom_dialog.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
+import '../../regester_presntation/controller/theme_controller.dart';
 
 class taskdetails extends StatefulWidget {
 
@@ -98,16 +99,19 @@ class _taskdetailsState extends State<taskdetails> {
 
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: Colors.white,
+        backgroundColor: Provider.of<ThemeProvider>(context).switchValue==false?
+        AppColors.white:AppColors.dark,
         centerTitle: true,
         title: Text("${AppTexts.taskdetails}",
           textAlign: TextAlign.center,
-          style: TextStyle(),),
+          style: Theme.of(context).textTheme.titleLarge,),
         leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
-            child: Image(image: AssetImage(AppImages.back),)),
+            child: Image(image: AssetImage(AppImages.back),
+              color: Provider.of<ThemeProvider>(context).switchValue==false?
+              AppColors.black:AppColors.white,)),
 
 
       ),
@@ -124,20 +128,28 @@ class _taskdetailsState extends State<taskdetails> {
                 height: 90,
                 width: 331,
                 decoration:  BoxDecoration(
-                  color: Colors.white,
+                  color: Provider.of<ThemeProvider>(context).switchValue==false?
+                  Colors.white
+                      :AppColors.listtiledark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("${AppTexts.taskname}",style: TextStyle(
-                        fontSize: 14
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("${AppTexts.taskname}",style: TextStyle(
+                          fontSize: 14
+                      ),),
+                    ),
 
-                    Text("${writenote[widget.index].taskName}",style: TextStyle(
-                        fontSize: 14,color: Color(0xff8E8E8E)
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text("${writenote[widget.index].taskName}",style: TextStyle(
+                          fontSize: 14,color: Color(0xff8E8E8E)
+                      ),),
+                    ),
 
 
 
@@ -152,21 +164,29 @@ class _taskdetailsState extends State<taskdetails> {
                 height: 142,
                 width: 331,
                 decoration:  BoxDecoration(
-                  color: Colors.white,
+                  color: Provider.of<ThemeProvider>(context).switchValue==false?
+                  Colors.white
+                      :AppColors.listtiledark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("${AppTexts.Description}",style: TextStyle(
-                        fontSize: 14
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("${AppTexts.Description}",style: TextStyle(
+                          fontSize: 14
+                      ),),
+                    ),
 
 
-                    Text("${writenote[widget.index].decsrption}",style: TextStyle(
-                        fontSize: 14,color: Color(0xff8E8E8E)
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text("${writenote[widget.index].decsrption}",style: TextStyle(
+                          fontSize: 14,color: Color(0xff8E8E8E)
+                      ),),
+                    ),
 
                   ],
 
@@ -175,55 +195,55 @@ class _taskdetailsState extends State<taskdetails> {
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text("${AppTexts.StartDate}"),
-                    subtitle:   Text("${writenote[widget.index].starttask}",style: TextStyle(
-                        fontSize: 14
-                    ),),
-                    trailing: IconButton(
-                      onPressed: () =>  _selectDate1(context),
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.date),),
+                  title: Text("${AppTexts.StartDate}"),
+                  subtitle:   Text("${writenote[widget.index].starttask}",style: TextStyle(
+                      fontSize: 14
+                  ),),
+                  trailing: IconButton(
+                    onPressed: () =>  _selectDate1(context),
 
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+                    icon:Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
 
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text("${AppTexts.EndtDate}"),
-                    subtitle:
-                    Text("${writenote[widget.index].Endtask}",
-                      style: TextStyle(
-                        fontSize: 14
-                    ),),
-                    trailing: IconButton(
-                      onPressed: () => _selectDate2(context),
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.date),),
+                  title: Text("${AppTexts.EndtDate}"),
+                  subtitle:
+                  Text("${writenote[widget.index].Endtask}",
+                    style: TextStyle(
+                      fontSize: 14
+                  ),),
+                  trailing: IconButton(
+                    onPressed: () => _selectDate2(context),
+                    icon: Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
 
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.timelogo),),
-                    title: Text("${AppTexts.AddTime}"),
-                    subtitle:
-                    Text("${writenote[widget.index].selecttime}",),
-                    trailing: IconButton(
-                      onPressed: () => _selectTime(context),
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.timelogo),),
+                  title: Text("${AppTexts.AddTime}"),
+                  subtitle:
+                  Text("${writenote[widget.index].selecttime}",),
+                  trailing: IconButton(
+                    onPressed: () => _selectTime(context),
+                    icon: Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
@@ -267,13 +287,17 @@ class _taskdetailsState extends State<taskdetails> {
                   height:52 ,
                   width: 331,
 
-                  decoration: BoxDecoration(
+                  decoration: Provider.of<ThemeProvider>(context).switchValue==false?
+                  BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
                             AppColors.blue,
                             AppColors.move,
                           ]
                       ),
+                      borderRadius: BorderRadius.circular(10)
+                  ):  BoxDecoration(
+                     color: AppColors.buttondark,
                       borderRadius: BorderRadius.circular(10)
                   ),
                   child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/core/features/Home/widgets/Notes.dart';
+
 import '../../Tasks/model/model.dart';
+import 'Notes.dart';
 
 
 class homebody extends StatefulWidget {
@@ -28,7 +29,7 @@ class _homebodyState extends State<homebody> {
 
 
     return Expanded(
-      flex: 8,
+       flex: 3,
       child: ListView.builder(
         itemCount: writenote.length,
         // itemCount: homelist.length,

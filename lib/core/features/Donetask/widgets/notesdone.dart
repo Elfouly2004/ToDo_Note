@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
+import '../../regester_presntation/controller/theme_controller.dart';
 
 class donenotes extends StatefulWidget {
   const donenotes({required this.index});
@@ -22,45 +24,55 @@ class _donenotesState extends State<donenotes> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10),
-      child: Card(
-        child: ListTile(
+      child: ListTile(
 
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
-                )  ,
-                borderRadius: BorderRadius.circular(10)
-            ),
-            child: Center(
-                child:  Image(
-                  image: AssetImage(AppImages.task),height: 30,width: 30,
-                )
-            ),
+
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration:Provider.of<ThemeProvider>(context).switchValue==false?
+          BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
+              )  ,
+              borderRadius: BorderRadius.circular(10)
+          )
+              :
+          BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [ AppColors.color1icon.withOpacity(0.2), AppColors.color2icon.withOpacity(0.2),]
+              )  ,
+              borderRadius: BorderRadius.circular(10)
           ),
 
-
-          title: Text("${Done[widget.index].taskName}",
-            style: TextStyle(fontWeight: FontWeight.w600),),
-          subtitle:Text("${Done[widget.index].selecttime}",
-            style:TextStyle(
-                color: Color(0xff90B6E2)
-            ) ,
+          child: Center(
+              child:  Image(
+                image: AssetImage(AppImages.task),height: 30,width: 30,
+              )
           ),
+        ),
 
 
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("${Done[widget.index].starttask.toString().split(" ")[0]}",style: TextStyle(color: Color(0xff24252C),fontSize: 15),),
-                SizedBox(height: 10,),
-              Text("${Done[widget.index].Endtask.toString().split(" ")[0]}",style: TextStyle(color: Color(0xff24252C),fontSize: 15)),
+        title: Text("${Done[widget.index].taskName}",
+          style: TextStyle(fontWeight: FontWeight.w600),),
+        subtitle:Text("${Done[widget.index].selecttime}",
+          style:TextStyle(
+              color: Color(0xff90B6E2)
+          ) ,
+        ),
 
 
-            ],
-          ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("${Done[widget.index].starttask.toString().split(" ")[0]}",
+              style: Theme.of(context).textTheme.bodyLarge),
+              SizedBox(height: 5,),
+            Text("${Done[widget.index].Endtask.toString().split(" ")[0]}",
+                style: Theme.of(context).textTheme.bodyLarge),
+
+
+          ],
         ),
       ),
     );

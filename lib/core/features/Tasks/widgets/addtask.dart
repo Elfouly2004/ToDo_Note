@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Home/homescreen.dart';
-import 'package:todo/core/features/Home/widgets/homebody.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
+import '../../regester_presntation/controller/theme_controller.dart';
 import '../model/model.dart';
 
 class addtask extends StatefulWidget {
@@ -80,16 +81,18 @@ class _addtaskState extends State<addtask> {
 
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: Colors.white,
+        backgroundColor:  Provider.of<ThemeProvider>(context).switchValue==false?
+        AppColors.white:AppColors.dark,
         centerTitle: true,
         title: Text("Add Task",
           textAlign: TextAlign.center,
-        style: TextStyle(),),
+        style: Theme.of(context).textTheme.titleLarge,),
         leading: GestureDetector(
           onTap: () {
           Navigator.pop(context);
           },
-            child: Image(image: AssetImage(AppImages.back),)),
+            child: Image(image: AssetImage(AppImages.back),color: Provider.of<ThemeProvider>(context).switchValue==false?
+            AppColors.black:AppColors.white,)),
 
 
       ),
@@ -106,16 +109,21 @@ class _addtaskState extends State<addtask> {
                 height: 90,
                 width: 331,
                 decoration:  BoxDecoration(
-                  color: Colors.white,
+                  color: Provider.of<ThemeProvider>(context).switchValue==false?
+                  Colors.white:AppColors.listtiledark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("Task Name",style: TextStyle(
-                          fontSize: 14
-                        ),),
+                    Padding(
+                      
+                      child: Text("Task Name",style: TextStyle(
+                            fontSize: 14
+                          ),),
+                      padding: EdgeInsets.all(5),
+                    ),
 
 
                      Form(
@@ -135,7 +143,7 @@ class _addtaskState extends State<addtask> {
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
 
-                          hintText: " Enter The Task Name   ",
+                          hintText: "   Enter The Task Name   ",
                           hintStyle: TextStyle(fontSize: 15,color: Color(0xff6E6A7C)),
                         ),
                         validator: (value) {
@@ -158,16 +166,20 @@ class _addtaskState extends State<addtask> {
                 height: 142,
                 width: 331,
                 decoration:  BoxDecoration(
-                  color: Colors.white,
+                  color: Provider.of<ThemeProvider>(context).switchValue==false?
+                  Colors.white:AppColors.listtiledark,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text("Description",style: TextStyle(
-                        fontSize: 14
-                    ),),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text("Description",style: TextStyle(
+                          fontSize: 14
+                      ),),
+                    ),
 
                     Form(
                       key:formkey2,
@@ -205,50 +217,49 @@ class _addtaskState extends State<addtask> {
         
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
         
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text('Start Date'),
-                    subtitle: Text('Enter The Start Date',),
-                    trailing: IconButton(
-                      onPressed: () =>  _selectDate1(context).toString().split("")[0],
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.date),),
+                  title: Text('Start Date'),
+                  subtitle: Text('Enter The Start Date',),
+                  trailing: IconButton(
+                    onPressed: () =>  _selectDate1(context).toString().split("")[0],
 
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+                    icon: Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
         
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
         
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.date),),
-                    title: Text('End Date'),
-                    subtitle:
-                    Text('Enter The End Date',),
-                    trailing: IconButton(
-                      onPressed: () => _selectDate2(context).toString().split("")[0],
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.date),),
+                  title: Text('End Date'),
+                  subtitle:
+                  Text('Enter The End Date',),
+                  trailing: IconButton(
+                    onPressed: () => _selectDate2(context).toString().split("")[0],
+                    icon: Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
 
-              Card(
-                child: ListTile(
-                    leading: Image(image: AssetImage(AppImages.timelogo),),
-                    title: Text('Add Time'),
-                    subtitle:
-                    Text('Set a Time For The Task',),
-                    trailing: IconButton(
-                      onPressed: () => _selectTime(context),
-                      icon: Icon(Icons.arrow_drop_down_circle),
-                    )
-                  // isThreeLine: true,
-                ),
+              ListTile(
+                  leading: Image(image: AssetImage(AppImages.timelogo),),
+                  title: Text('Add Time'),
+                  subtitle: Text('Set a Time For The Task',),
+                  trailing: IconButton(
+                    onPressed: () => _selectTime(context),
+                    icon: Icon(Icons.arrow_drop_down_circle,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.black:AppColors.white,),
+                  )
+                // isThreeLine: true,
               ),
 
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
@@ -291,7 +302,8 @@ class _addtaskState extends State<addtask> {
                   height:52 ,
                   width: 331,
 
-                  decoration: BoxDecoration(
+                  decoration: Provider.of<ThemeProvider>(context).switchValue==false?
+                  BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
                             AppColors.blue,
@@ -299,17 +311,17 @@ class _addtaskState extends State<addtask> {
                           ]
                       ),
                       borderRadius: BorderRadius.circular(10)
+                  ):BoxDecoration(
+                    color: AppColors.buttondark,
+                      borderRadius: BorderRadius.circular(10)
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("${AppTexts.Addtask}",
-                        style: TextStyle(fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900
-                        )
-                        ,textAlign: TextAlign.center,),
-                    ],
+                  child: Center(
+                    child: Text("${AppTexts.Addtask}",
+                      style: TextStyle(fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900
+                      )
+                      ,textAlign: TextAlign.center,),
                   ),
                 ),
               ),

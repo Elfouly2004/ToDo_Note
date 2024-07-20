@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/utils/Appcolors.dart';
 import 'package:todo/core/utils/Apptexts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo/core/utils/theme.dart';
 
-import '../../utils/Appimages.dart';
+import '../../../utils/Appimages.dart';
 
-import '../Home/homescreen.dart';
+import '../../Home/homescreen.dart';
+import '../controller/theme_controller.dart';
 
 class regester extends StatefulWidget {
   const regester({super.key});
@@ -70,12 +73,18 @@ class _regesterState extends State<regester> {
                  child: Container(
                      height:MediaQuery.sizeOf(context).height*0.15,
                       width:MediaQuery.sizeOf(context).height*0.15 ,
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(20),
-                     border: Border.all(color: AppColors.camera)
+                   decoration: Provider.of<ThemeProvider>(context).switchValue==false?BoxDecoration(
+                       borderRadius: BorderRadius.circular(20),
+                       border: Border.all(color: AppColors.camera,width: 2)
+                   )
+                   :BoxDecoration(
+                       borderRadius: BorderRadius.circular(20),
+                       border: Border.all(color: AppColors.camera,width: 2)
                    ),
                    child:myPhoto == null?
-                   Icon(Icons.add_a_photo): ClipRRect(
+                   Icon(Icons.add_a_photo,
+                     color: Provider.of<ThemeProvider>(context).switchValue==false?AppColors.black:AppColors.white,)
+                       : ClipRRect(
                        borderRadius: BorderRadius.circular(20),
                        child: Image.file(File(myPhoto!.path),fit: BoxFit.cover,
                          height:MediaQuery.sizeOf(context).height*0.1,
@@ -94,44 +103,47 @@ class _regesterState extends State<regester> {
                      });
                    });
                  },
+                   
 
-                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update)
+                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update,
+                  style: Theme.of(context).textTheme.bodyMedium,)
                ),
 
                Container(
                  height:110 ,
                  width: 331,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(20),
-                   border: Border.all(color: AppColors.blue)
+                 decoration: Provider.of<ThemeProvider>(context).switchValue==false?BoxDecoration(
+                     borderRadius: BorderRadius.circular(20),
+                     border: Border.all( color: AppColors.blue,width: 2),)
+                     :
+                 BoxDecoration(
+                     borderRadius: BorderRadius.circular(20),
+                     border: Border.all( color: Color(0xff87B5E3),width: 2)
 
                  ),
                  child: Column(
                    children: [
                      Padding(
-                       padding: const EdgeInsets.only(top:5),
+                       padding: const EdgeInsets.only(top:10),
                        child: Column(
                          crossAxisAlignment: CrossAxisAlignment.start,
                          mainAxisAlignment: MainAxisAlignment.start,
                          children: [
 
-                           Text("  Your Name :",style: TextStyle(fontSize: 14), ),
-
+                           Text("  Your Name :",style: Theme.of(context).textTheme.bodyMedium, ),
                            Form(
                              key:formkey1,
                              child: TextFormField(
 
                                keyboardType: TextInputType.name,
-                               style: TextStyle(
-                                  fontSize: 20,
-                                 fontWeight: FontWeight.w600,
-                               ),
+                               style:Theme.of(context).textTheme.titleLarge,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                   // disabledBorder: InputBorder.none,
                                   hintText: " Enter Your Name  ",
+                                  hintStyle: Theme.of(context).textTheme.bodySmall,
                                 ),
 
                                onChanged: (value) {
@@ -153,9 +165,13 @@ class _regesterState extends State<regester> {
                  ),
                ),
 
+
+
                SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
 
+               Provider.of<ThemeProvider>(context).
+               switchValue == false?
                GestureDetector(
                  onTap: () {
 
@@ -191,8 +207,38 @@ class _regesterState extends State<regester> {
                      ],
                    ),
                  ),
-               ),
+               ):
+               GestureDetector(
+                 onTap: () {
 
+                   if(formkey1.currentState!.validate()==true&&myPhoto!=null){
+                     Navigator.pushReplacement(context, MaterialPageRoute(
+                       builder: (context) {
+                         return homescreen(name,photo:myPhoto!.path,selecttime: null ,) ;
+                       },));
+
+                   }
+                 },
+                 child: Container(
+                   height:52 ,
+                   width: 331,
+                   decoration: BoxDecoration(
+                       color: AppColors.buttondark,
+                       borderRadius: BorderRadius.circular(10)
+                   ),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Text("${AppTexts.Get}",
+                         style: TextStyle(fontSize: 20,
+                             color: Colors.white,
+                             fontWeight: FontWeight.w900
+                         )
+                         ,textAlign: TextAlign.center,),
+                     ],
+                   ),
+                 ),
+               )
 
 
 

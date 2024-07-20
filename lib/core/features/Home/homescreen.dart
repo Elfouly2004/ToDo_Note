@@ -1,20 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:todo/core/features/Donetask/donescreen.dart';
+import 'package:provider/provider.dart';import 'package:todo/core/features/Donetask/donescreen.dart';
+import 'package:todo/core/features/Home/veiw/homebody.dart';
+import 'package:todo/core/features/Home/veiw/widgets/Custom_Appbar.dart';
+import 'package:todo/core/features/Home/veiw/widgets/custom_drawer.dart';
 import 'package:todo/core/features/archive%20tasks/archivescreen.dart';
 import 'package:todo/core/utils/Appcolors.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/core/features/Home/widgets/homebody.dart';
 import 'package:todo/core/utils/Apptexts.dart';
+import 'package:todo/core/utils/theme.dart';
 import '../Tasks/model/model.dart';
 import '../Tasks/widgets/addtask.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../regester_presntation/controller/theme_controller.dart';
+
 class homescreen extends StatefulWidget {
   String name="";
-  final String photo;
+  final  photo;
   final  selecttime;
 
 
@@ -46,43 +50,55 @@ class _homescreenState extends State<homescreen> {
 
 
         leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-              icon: Image.asset(
-                AppImages.drawer,
-                height: 32,
-                width: 32,
-                fit: BoxFit.cover,
-              ),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },),
-            toolbarHeight: 180,
+          return IconButton(
+            icon: Image.asset(
+              AppImages.drawer,
+              height: 32,
+              width: 32,
+              fit: BoxFit.cover,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+
+            },
+          );
+        },),
+        toolbarHeight: 180,
+
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
+          decoration:  Provider.of<ThemeProvider>(context).switchValue==false?BoxDecoration(
             gradient: LinearGradient(
                 colors: <Color>[AppColors.blue, AppColors.move]),
+          )
+              :
+          BoxDecoration(
+              color: AppColors.buttondark
           ),
         ),
 
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Provider.of<ThemeProvider>(context).switchValue==false?
             Text("${AppTexts.hello}",style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: AppColors.hello),),
+                color: AppColors.hello),)
+                :Text("${AppTexts.hello}",style: Theme.of(context).textTheme.bodyMedium,)
+            ,
 
+            Provider.of<ThemeProvider>(context).switchValue==false?
             Text("${name}",style: TextStyle(
                 fontSize:20 ,
                 fontWeight: FontWeight.w800,
-                color: AppColors.hello),),
+                color: AppColors.hello),)
+                :
+            Text("${name}",style: Theme.of(context).textTheme.bodyLarge,)
+            ,
 
 
             Text(
-                DateFormat.MMMEd().format(DateTime.now()),
+              DateFormat.MMMEd().format(DateTime.now()),
               style: TextStyle(color: Colors.white,
                 fontWeight: FontWeight.w600,
               ),
@@ -90,132 +106,29 @@ class _homescreenState extends State<homescreen> {
 
 
 
-            
+
           ],
         ),
 
         actions: [
           CircleAvatar(
             radius: 40,
-              backgroundColor: Colors.white,
-              backgroundImage: FileImage(File(photo)),
+            backgroundColor: Colors.white,
+            backgroundImage: FileImage(File(photo)),
           )
 
         ],
       ),
-
       drawer: Drawer(
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(50),
               bottomRight: Radius.circular(0)),
         ),
         surfaceTintColor: Colors.deepOrange,
-        backgroundColor: Colors.white,
+        backgroundColor:Provider.of<ThemeProvider>(context).switchValue==false? AppColors.white:AppColors.dark,
         width: 260,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-
-            Container(
-              width: double.infinity,
-              height: MediaQuery.sizeOf(context).height*0.22,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: <Color>[AppColors.blue, AppColors.move]),
-              ),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-
-                  CircleAvatar(
-
-                    child: CircleAvatar(
-                      radius: 35,
-                      backgroundColor: Colors.white,
-                      backgroundImage: FileImage(File(photo)),
-                    ),
-                    radius: 40,
-                    foregroundColor: Colors.white ,
-                  ),
-
-                  Text("${name}",style: TextStyle(
-                      fontSize:20 ,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.white),),
-                ],
-              ),
-            ),
-
-            SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
-
-
-
-            Switch(value:theme=!theme,
-              onChanged: (value) {
-              Get.isDarkMode?Get.changeTheme(
-                  ThemeData.light()):Get.changeTheme(ThemeData.dark());
-            },
-            ),
-
-            SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
-
-
-            GestureDetector(
-              onTap: () {
-             Navigator.push(context,MaterialPageRoute(builder:   (context) => archivescreen(),));
-              },
-              child: Container(
-                height:48 ,
-                width: 235,
-                decoration: BoxDecoration(
-                  color: Color(0xff90B6E2).withOpacity(0.3),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(12),
-                    topLeft: Radius.circular(0),
-                    topRight: Radius.circular(12),
-                  )
-                ),
-                child: Center(
-                  child: Center(
-                    child:  Image.asset(AppImages.archivedtask,width: 150,),
-                  )
-                ),
-              ),
-            ),
-
-            SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
-
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder:   (context) => donescreen(),));
-
-              },
-              child: Container(
-                height:48 ,
-                width: 235,
-                decoration: BoxDecoration(
-                    color: Color(0xff90B6E2).withOpacity(0.3),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(0),
-                      bottomRight: Radius.circular(12),
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(12),
-                    )
-                ),
-                  child: Center(
-                    child:  Image.asset(AppImages.done, width: 150,),
-                  )
-              ),
-            ),
-
-
-
-          ],
-        ),
+        child:wide_drawer(Photo: File(photo),name: name,)
       ),
 
 
@@ -223,16 +136,16 @@ class _homescreenState extends State<homescreen> {
 
         children: [
 
-             SizedBox(height: 20,),
+
 
 
           writenote.isEmpty? Expanded(
             child: Center(
-              child: const Text("${AppTexts.nonote} ",
+              child:  Text("${AppTexts.nonote} ",
                 style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
             ),
           ):
-          homebody(name: name,photo: photo,selected: selecttime,),
+          Expanded(child: homebody(name: name,photo: photo,selected: selecttime,)),
 
 
 
@@ -253,7 +166,7 @@ class _homescreenState extends State<homescreen> {
                setState(() {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                    return addtask(
-                     
+
 
                    );
                  },)).then((k){
@@ -272,10 +185,14 @@ class _homescreenState extends State<homescreen> {
                     size: 40,
                     color:  Color(0xffFFFFFF),
                   ),
-                  decoration: BoxDecoration(
+                  decoration:  Provider.of<ThemeProvider>(context).switchValue==false?BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(colors: [ AppColors.blue,
                         AppColors.move,])
+                  )
+                      :BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.buttondark
                   ),
                 ),
 

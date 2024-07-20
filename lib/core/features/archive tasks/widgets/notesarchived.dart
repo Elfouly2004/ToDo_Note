@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
 import '../../../utils/Apptexts.dart';
+import '../../regester_presntation/controller/theme_controller.dart';
 
 class archivenotes extends StatefulWidget {
   const archivenotes({required this.index,required this.onTap});
@@ -25,19 +27,28 @@ class _archivenotesState extends State<archivenotes> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(10),
-      child: Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: ListTile(
 
           leading: Container(
             width: 40,
             height: 40,
-            decoration: BoxDecoration(
+            decoration:Provider.of<ThemeProvider>(context).switchValue==false?
+            BoxDecoration(
                 gradient: LinearGradient(
-                    colors:
-                    [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
+                    colors: [ AppColors.blue.withOpacity(0.4), AppColors.move.withOpacity(0.4),]
+                )  ,
+                borderRadius: BorderRadius.circular(10)
+            )
+                :
+            BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [ AppColors.color1icon.withOpacity(0.2), AppColors.color2icon.withOpacity(0.2),]
                 )  ,
                 borderRadius: BorderRadius.circular(10)
             ),
+
             child: Center(
                 child:  Image(
                   image: AssetImage(AppImages.task),height: 30,width: 30,
@@ -62,19 +73,26 @@ class _archivenotesState extends State<archivenotes> {
               height:30 ,
               width:77,
 
-              decoration: BoxDecoration(
+              decoration: Provider.of<ThemeProvider>(context).switchValue==false?
+              BoxDecoration(
                   gradient: LinearGradient(
                       colors: [
-                        AppColors.blue,
                         AppColors.move,
+                        AppColors.blue
                       ]
                   ),
+                  borderRadius: BorderRadius.circular(6)
+              ):
+              BoxDecoration(
+                  color: AppColors.blue,
                   borderRadius: BorderRadius.circular(6)
               ),
               child: Center(
                 child: Text("${AppTexts.unarchive}",
                   style: TextStyle(fontSize: 15,
-                      color: Colors.white,
+                      color: Provider.of<ThemeProvider>(context).switchValue==false?
+                      AppColors.white
+                      :Color(0xff24364B),
                       fontWeight: FontWeight.w900
                   )
                   ,textAlign: TextAlign.center,),

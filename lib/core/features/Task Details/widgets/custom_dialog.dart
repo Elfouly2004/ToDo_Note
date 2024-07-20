@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Home/homescreen.dart';
 
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
 import '../../Tasks/model/model.dart';
+import '../../regester_presntation/controller/theme_controller.dart';
 
 class customdialog extends StatefulWidget {
   const  customdialog(
@@ -34,7 +36,16 @@ class _customdialogState extends State<customdialog> {
   @override
   Widget build(BuildContext context) {
     return  AlertDialog(
-      title: Text("${AppTexts.questiondelete}"),
+      backgroundColor: Provider.of<ThemeProvider>(context).switchValue==false?
+      AppColors.white
+      :
+      AppColors.dark,
+      title: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text("${AppTexts.questiondelete}",
+        style: Theme.of(context).textTheme.titleLarge,
+        textAlign: TextAlign.start,),
+      ),
 
       actions: [
 
@@ -79,7 +90,8 @@ class _customdialogState extends State<customdialog> {
                   height:40 ,
                   width: 105,
 
-                  decoration: BoxDecoration(
+                  decoration:Provider.of<ThemeProvider>(context).switchValue==false?
+                  BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
                             AppColors.blue,
@@ -87,7 +99,8 @@ class _customdialogState extends State<customdialog> {
                           ]
                       ),
                       borderRadius: BorderRadius.circular(10)
-                  ),
+                  ):BoxDecoration(color: AppColors.buttondark
+                      , borderRadius: BorderRadius.circular(10)),
                   child:Center(
                     child: Text("${AppTexts.no}",
                       textAlign: TextAlign.center,
