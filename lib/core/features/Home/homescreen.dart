@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';import 'package:todo/core/features/Donetask/donescreen.dart';
+import 'package:todo/core/features/Home/presntation/controller/homecontroller.dart';
 import 'package:todo/core/features/Home/veiw/homebody.dart';
 import 'package:todo/core/features/Home/veiw/widgets/Custom_Appbar.dart';
 import 'package:todo/core/features/Home/veiw/widgets/custom_drawer.dart';
@@ -137,15 +138,13 @@ class _homescreenState extends State<homescreen> {
         children: [
 
 
-
-
-          writenote.isEmpty? Expanded(
+          Provider.of<Homecontroller>(context,).writenote.isEmpty? Expanded(
             child: Center(
               child:  Text("${AppTexts.nonote} ",
                 style: TextStyle(fontSize: 40,fontWeight: FontWeight.w900),),
             ),
           ):
-          Expanded(child: homebody(name: name,photo: photo,selected: selecttime,)),
+          Expanded(child: homebody()),
 
 
 
@@ -169,11 +168,7 @@ class _homescreenState extends State<homescreen> {
 
 
                    );
-                 },)).then((k){
-      setState(() {
-
-      });
-    });;
+                 },));
                });
                 },
 

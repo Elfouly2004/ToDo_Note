@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/core/features/Tasks/model/model.dart';
-
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Appimages.dart';
 import '../../../utils/Apptexts.dart';
+import '../../Home/presntation/controller/homecontroller.dart';
 import '../../regester_presntation/controller/theme_controller.dart';
 
 class archivenotes extends StatefulWidget {
@@ -18,13 +17,14 @@ class archivenotes extends StatefulWidget {
 
 class _archivenotesState extends State<archivenotes> {
 
-  List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
 
   final index;
   final onTap;
   _archivenotesState(this.index,this.onTap);
   @override
   Widget build(BuildContext context) {
+    Provider.of<Homecontroller>(context).Archivelist = Provider.of<Homecontroller>(context).writenote.where((Notes)=>Notes.archive==true).toList();
+
     return Padding(
       padding: EdgeInsets.all(10),
       child: Padding(
@@ -57,9 +57,9 @@ class _archivenotesState extends State<archivenotes> {
           ),
 
 
-          title: Text("${Archivelist[widget.index].taskName}",
+          title: Text("${  Provider.of<Homecontroller>(context,).Archivelist[widget.index].taskName}",
             style: TextStyle(fontWeight: FontWeight.w600),),
-          subtitle:Text("${Archivelist[widget.index].selecttime}",
+          subtitle:Text("${  Provider.of<Homecontroller>(context,).Archivelist[widget.index].selecttime}",
             style:TextStyle(
                 color: Color(0xff90B6E2)
             ) ,

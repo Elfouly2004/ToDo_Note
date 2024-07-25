@@ -6,6 +6,7 @@ import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
+import '../../Home/presntation/controller/homecontroller.dart';
 import '../../regester_presntation/controller/theme_controller.dart';
 import '../model/model.dart';
 
@@ -18,56 +19,6 @@ class addtask extends StatefulWidget {
 
 class _addtaskState extends State<addtask> {
 
-  String  ?taskname;
-  String? description;
-  TextEditingController namecontroller = TextEditingController();
-  TextEditingController descriptioncontroller = TextEditingController();
-
-  DateTime selectedDate1 = DateTime.now();
-  Future<void> _selectDate1(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate1,
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2030));
-    if (picked != null && picked != selectedDate1) {
-      setState(() {
-        selectedDate1 = picked;
-      });
-    }
-  }
-
-
-
-  DateTime selectedDate2 = DateTime.now();
-  Future<void> _selectDate2(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate2,
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2030));
-    if (picked != null && picked != selectedDate2) {
-      setState(() {
-        selectedDate2 = picked;
-      });
-    }
-  }
-
-
-  TimeOfDay selectedTime = TimeOfDay.now();
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked_s = await showTimePicker(
-        context: context,
-        initialTime: selectedTime, builder: (BuildContext context, Widget? child) {
-      return MediaQuery(
-        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
-        child: child!,
-      );});
-    if (picked_s != null && picked_s != selectedTime.format(context) )
-      setState(() {
-        selectedTime = picked_s;
-      });
-  }
 
 
   GlobalKey<FormState> formkey1= GlobalKey <FormState>();
@@ -106,7 +57,7 @@ class _addtaskState extends State<addtask> {
               SizedBox(height:MediaQuery.sizeOf(context).height*0.01,),
         
               Container(
-                height: 90,
+
                 width: 331,
                 decoration:  BoxDecoration(
                   color: Provider.of<ThemeProvider>(context).switchValue==false?
@@ -129,10 +80,12 @@ class _addtaskState extends State<addtask> {
                      Form(
                       key:formkey1,
                       child: TextFormField(
+                        minLines: 1,
+                        maxLines: 1,
                         onTapOutside: (event) {
                           FocusManager.instance.primaryFocus?.unfocus();
                         },
-                        controller: namecontroller,
+                        controller: Provider.of<Homecontroller>(context).namecontroller,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
                           fontSize: 20,
@@ -163,7 +116,6 @@ class _addtaskState extends State<addtask> {
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
               Container(
-                height: 142,
                 width: 331,
                 decoration:  BoxDecoration(
                   color: Provider.of<ThemeProvider>(context).switchValue==false?
@@ -184,10 +136,12 @@ class _addtaskState extends State<addtask> {
                     Form(
                       key:formkey2,
                       child: TextFormField(
+                        minLines: 3,
+                        maxLines: 6,
                         onTapOutside: (event) {
                           FocusManager.instance.primaryFocus?.unfocus();
                         },
-                         controller: descriptioncontroller,
+                         controller: Provider.of<Homecontroller>(context). descriptioncontroller,
                         keyboardType: TextInputType.name,
                         style: TextStyle(
                           fontSize: 20,
@@ -217,12 +171,16 @@ class _addtaskState extends State<addtask> {
         
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
         
+
+
+
+
               ListTile(
                   leading: Image(image: AssetImage(AppImages.date),),
                   title: Text('Start Date'),
                   subtitle: Text('Enter The Start Date',),
                   trailing: IconButton(
-                    onPressed: () =>  _selectDate1(context).toString().split("")[0],
+                    onPressed: () =>  Provider.of<Homecontroller>(context,listen: false).SelectDate1(context),
 
                     icon: Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
@@ -230,16 +188,15 @@ class _addtaskState extends State<addtask> {
                   )
                 // isThreeLine: true,
               ),
-        
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.02,),
-        
+
               ListTile(
                   leading: Image(image: AssetImage(AppImages.date),),
                   title: Text('End Date'),
-                  subtitle:
-                  Text('Enter The End Date',),
+                  subtitle:Text('Enter The End Date',),
                   trailing: IconButton(
-                    onPressed: () => _selectDate2(context).toString().split("")[0],
+                    onPressed: () => Provider.of<Homecontroller>(context,listen: false).SelectDate2(context),
                     icon: Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
                       AppColors.black:AppColors.white,),
@@ -254,7 +211,7 @@ class _addtaskState extends State<addtask> {
                   title: Text('Add Time'),
                   subtitle: Text('Set a Time For The Task',),
                   trailing: IconButton(
-                    onPressed: () => _selectTime(context),
+                    onPressed: () => Provider.of<Homecontroller>(context,listen: false).SelectTime( context),
                     icon: Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
                       AppColors.black:AppColors.white,),
@@ -262,40 +219,33 @@ class _addtaskState extends State<addtask> {
                 // isThreeLine: true,
               ),
 
+
               SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
               GestureDetector(
                 onTap:() {
 
-                    String taskname = namecontroller.text.trim();
-                    String description =descriptioncontroller.text.trim();
-                    if(taskname.isNotEmpty&&description.isNotEmpty){
-                      namecontroller.text='';
-                      descriptioncontroller.text='';
-                      writenote.add(
-                          Notes(
-                          taskName:taskname,
-                          decsrption: description,
-                          selecttime:selectedTime.format(context),
-                          starttask: selectedDate1.toString().split(" ")[0],
-                          Endtask: selectedDate2.toString().split(" ")[0],
-                          )
-                      );
-                      //
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) =>
-                      //         homescreen(name, photo: photo,
-                      //           selecttime: selectedTime.format(context),) ,)).then((k){
-                      //   setState(() {
-                      //
-                      //   });
-                      // });
 
-                      Navigator.pop(context);
 
-                    }else{
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("you should write task")));
-                    }
+             Provider.of<Homecontroller>(context,listen: false).addNote(
+               title:Provider.of<Homecontroller>(context,listen: false).namecontroller.text,
+               des: Provider.of<Homecontroller>(context,listen : false).descriptioncontroller.text,
+              context: context,);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 },
                 child: Container(
@@ -311,7 +261,9 @@ class _addtaskState extends State<addtask> {
                           ]
                       ),
                       borderRadius: BorderRadius.circular(10)
-                  ):BoxDecoration(
+                  )
+                      :
+                  BoxDecoration(
                     color: AppColors.buttondark,
                       borderRadius: BorderRadius.circular(10)
                   ),
@@ -326,8 +278,6 @@ class _addtaskState extends State<addtask> {
                 ),
               ),
 
-              // Text("${selectedTime.format(context)}")
-              //
         
             ],
           ),

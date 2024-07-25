@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/Appcolors.dart';
@@ -60,13 +61,27 @@ class wide_drawer extends StatelessWidget {
             )
         ),
 
-        Switch(value: Provider.of<ThemeProvider>(context).switchValue,
-            onChanged: ( b){
-              Provider.of<ThemeProvider>(context,listen: false).changeSwitchValue(b);
-            },
-        activeThumbImage: AssetImage(AppImages.moon,),
-          inactiveThumbImage: AssetImage(AppImages.Sun),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
 
+
+            Text("Light",),
+
+            Switch(value: Provider.of<ThemeProvider>(context).switchValue,
+                onChanged: ( b){
+
+
+                  Provider.of<ThemeProvider>(context,listen: false).changeSwitchValue(b);
+
+                },
+            activeThumbImage: AssetImage(AppImages.moon,),
+              inactiveThumbImage: AssetImage(AppImages.Sun),
+
+            ),
+
+            Text("dark"),
+          ],
         ),
 
 

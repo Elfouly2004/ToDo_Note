@@ -7,83 +7,27 @@ import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/utils/Appimages.dart';
 import '../../../utils/Appcolors.dart';
 import '../../../utils/Apptexts.dart';
+import '../../Home/presntation/controller/homecontroller.dart';
 import '../../regester_presntation/controller/theme_controller.dart';
 
 class taskdetails extends StatefulWidget {
 
-  taskdetails(
-      {
-    required this.index,
-    required this.name,
-    required this.photo,
-    required this.select,
-  }
-  );
+  taskdetails({required this.index,  required this.onTap});
+
   final index;
-  final name;
-  final photo;
-  final select;
+  final void Function()? onTap;
+
+
 
   @override
-  State<taskdetails> createState() =>
-      _taskdetailsState(this.index,this.name,this.photo,this.select);
+  State<taskdetails> createState() => _taskdetailsState(this.index,this.onTap);
 }
 
 class _taskdetailsState extends State<taskdetails> {
   final index;
-  final name;
-  final photo;
-  final select;
-  _taskdetailsState(this.index,this.name,this.photo,this.select);
+  final void Function()? onTap;
 
-  TextEditingController namecontroller = TextEditingController();
-  TextEditingController descriptioncontroller = TextEditingController();
-
-  DateTime selectedDate1 = DateTime.now();
-  Future<void> _selectDate1(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate1,
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2030));
-    if (picked != null && picked != selectedDate1) {
-      setState(() {
-        selectedDate1 = picked;
-      });
-    }
-  }
-
-
-
-  DateTime selectedDate2 = DateTime.now();
-  Future<void> _selectDate2(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate2,
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2030));
-    if (picked != null && picked != selectedDate2) {
-      setState(() {
-        selectedDate2 = picked;
-      });
-    }
-  }
-
-
-  TimeOfDay selectedTime = TimeOfDay.now();
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked_s = await showTimePicker(
-        context: context,
-        initialTime: selectedTime, builder: (BuildContext context, Widget? child) {
-      return MediaQuery(
-        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
-        child: child!,
-      );});
-    if (picked_s != null && picked_s != selectedTime.format(context) )
-      setState(() {
-        selectedTime = picked_s;
-      });
-  }
+  _taskdetailsState(this.index,this.onTap);
 
 
   GlobalKey<FormState> formkey1= GlobalKey <FormState>();
@@ -91,7 +35,8 @@ class _taskdetailsState extends State<taskdetails> {
 
   @override
   Widget build(BuildContext context) {
-    List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
+    Provider.of<Homecontroller>(context,listen: false). Archivelist
+    = Provider.of<Homecontroller>(context,listen: false).writenote.where((Notes)=>Notes.archive==true).toList();
 
 
     return Scaffold(
@@ -146,7 +91,7 @@ class _taskdetailsState extends State<taskdetails> {
 
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Text("${writenote[widget.index].taskName}",style: TextStyle(
+                      child: Text("${ Provider.of<Homecontroller>(context,).writenote[widget.index].taskName}",style: TextStyle(
                           fontSize: 14,color: Color(0xff8E8E8E)
                       ),),
                     ),
@@ -183,7 +128,7 @@ class _taskdetailsState extends State<taskdetails> {
 
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Text("${writenote[widget.index].decsrption}",style: TextStyle(
+                      child: Text("${ Provider.of<Homecontroller>(context,).writenote[widget.index].decsrption}",style: TextStyle(
                           fontSize: 14,color: Color(0xff8E8E8E)
                       ),),
                     ),
@@ -198,11 +143,11 @@ class _taskdetailsState extends State<taskdetails> {
               ListTile(
                   leading: Image(image: AssetImage(AppImages.date),),
                   title: Text("${AppTexts.StartDate}"),
-                  subtitle:   Text("${writenote[widget.index].starttask}",style: TextStyle(
+                  subtitle:   Text("${ Provider.of<Homecontroller>(context,).writenote[widget.index].starttask}",style: TextStyle(
                       fontSize: 14
                   ),),
                   trailing: IconButton(
-                    onPressed: () =>  _selectDate1(context),
+                    onPressed: () =>  Provider.of<Homecontroller>(context,).SelectDate1(context),
 
                     icon:Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
@@ -217,12 +162,12 @@ class _taskdetailsState extends State<taskdetails> {
                   leading: Image(image: AssetImage(AppImages.date),),
                   title: Text("${AppTexts.EndtDate}"),
                   subtitle:
-                  Text("${writenote[widget.index].Endtask}",
+                  Text("${ Provider.of<Homecontroller>(context,).writenote[widget.index].Endtask}",
                     style: TextStyle(
                       fontSize: 14
                   ),),
                   trailing: IconButton(
-                    onPressed: () => _selectDate2(context),
+                    onPressed: () => Provider.of<Homecontroller>(context,).SelectDate2(context),
                     icon: Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
                       AppColors.black:AppColors.white,),
@@ -236,9 +181,9 @@ class _taskdetailsState extends State<taskdetails> {
                   leading: Image(image: AssetImage(AppImages.timelogo),),
                   title: Text("${AppTexts.AddTime}"),
                   subtitle:
-                  Text("${writenote[widget.index].selecttime}",),
+                  Text("${ Provider.of<Homecontroller>(context,).writenote[widget.index].selecttime}",),
                   trailing: IconButton(
-                    onPressed: () => _selectTime(context),
+                    onPressed: () =>  Provider.of<Homecontroller>(context,).SelectTime(context),
                     icon: Icon(Icons.arrow_drop_down_circle,
                       color: Provider.of<ThemeProvider>(context).switchValue==false?
                       AppColors.black:AppColors.white,),
@@ -250,38 +195,9 @@ class _taskdetailsState extends State<taskdetails> {
 
               GestureDetector(
                 onTap:() {
-               setState(() {
 
+                 Provider.of<Homecontroller>(context,listen: false).updatearchive(context,index);
 
-
-                 Navigator.push(context,MaterialPageRoute(
-                   builder: (context) => homescreen(
-                       name,
-                       photo: photo,
-                       selecttime: selectedTime
-                   ),
-                 )
-                 );
-
-                 writenote[widget.index].archive=true;
-
-
-                 Archivelist.add(Notes(
-                   taskName: writenote[widget.index].taskName,
-                   decsrption: writenote[widget.index].decsrption,
-                   selecttime: selectedTime.format(context),
-                   starttask: selectedDate1.toString().split(" ")[0],
-                   Endtask: selectedDate2.toString().split(" ")[0],
-                   archive: true,
-                 ));
-
-                 // writenote.removeAt(widget.index);
-
-
-               //  List<Notes> Archivelist =writenote.where((Notes)=>Notes.archive==true).toList();
-
-
-               });
                 },
                 child: Container(
                   height:52 ,
@@ -326,10 +242,11 @@ class _taskdetailsState extends State<taskdetails> {
               GestureDetector(
                 onTap:() {
 
-                  showDialog(context: context,
-                    builder:
-                        (context) {
-                      return customdialog(index: index,select: select,photo: photo,name: name,);
+                  showDialog(context: context, builder: (context) {
+                      return customdialog(index: index,
+                        onTap: onTap,
+
+                      );
                     },
                   );
 

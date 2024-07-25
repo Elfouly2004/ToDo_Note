@@ -25,7 +25,7 @@ class Notes {
      );
 }
 
-  List<Notes> writenote =[];
+  // List<Notes> writenote =[];
 
 // List<Notes> Done =[];
 //

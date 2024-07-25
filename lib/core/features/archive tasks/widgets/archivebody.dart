@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/features/Tasks/model/model.dart';
 import 'package:todo/core/features/archive%20tasks/widgets/notesarchived.dart';
+
+import '../../Home/presntation/controller/homecontroller.dart';
 
 class archivebody extends StatefulWidget {
   const archivebody({Key? key}) : super(key: key);
@@ -12,18 +15,18 @@ class archivebody extends StatefulWidget {
 class _archivebodyState extends State<archivebody> {
   @override
   Widget build(BuildContext context) {
-    List<Notes> Archivelist =writenote.where((Notes)=>Notes. archive==true).toList();
+    Provider.of<Homecontroller>(context). Archivelist = Provider.of<Homecontroller>(context,).writenote.where((Notes)=>Notes. archive==true).toList();
 
     return Expanded(
       flex: 8,
       child: ListView.builder(
-        itemCount: Archivelist.length,
-        itemBuilder: (context, index) => archivenotes(index: index, onTap:() {
-            setState(() {
-              Archivelist[index].archive = false;
-              writenote[writenote.indexOf(Archivelist[index])].archive = false;
-              Archivelist.removeAt(index);
-            });
+        itemCount:   Provider.of<Homecontroller>(context,).Archivelist.length,
+        itemBuilder: (context, index) => archivenotes(index: index,
+          onTap:() {
+
+
+          Provider.of<Homecontroller>(context,listen: false). deletearchive(index: index);
+
           },
 
         ),

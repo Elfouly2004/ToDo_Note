@@ -1,49 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../Tasks/model/model.dart';
+import '../presntation/controller/homecontroller.dart';
 import 'Notes.dart';
 
 
 class homebody extends StatefulWidget {
-  homebody({
-    required this.photo,
-    required this.name,
-    required this.selected,
-  });
 
-  final photo;
-  final name;
-  final  selected;
+
+
   @override
-  State<homebody> createState() => _homebodyState(this.name,this.photo,this.selected);
+  State<homebody> createState() => _homebodyState();
 }
 
 class _homebodyState extends State<homebody> {
-  final selected;
-  final photo;
-  final name;
-  _homebodyState(this.name,this.photo,this.selected);
+
   @override
   Widget build(BuildContext context) {
-    List<Notes> homelist =writenote.where((Notes)=>Notes.archive==false).toList();
-
 
     return Expanded(
        flex: 3,
       child: ListView.builder(
-        itemCount: writenote.length,
-        // itemCount: homelist.length,
+        itemCount:  Provider.of<Homecontroller>(context,).writenote.length,
         itemBuilder: (context, index) =>
             notes(
-              index: index,Name:name  ,
-              Photo:photo ,Selected: selected,
-              // title: homelist[index].taskName,
-              // subtitle: homelist[index].selecttime,
+              index: index,
               onDismissed: (p0) {
-          setState(() {
-            writenote.removeAt(index);
-          });
-        },)
+            Provider.of<Homecontroller>(context,listen: false).deleteNote(index ,context);
+
+        },
+            onTap: () {
+              Provider.of<Homecontroller>(context,listen: false).deleteNote( index,context);
+
+            },)
       ),
     );
 
