@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/core/features/Home/presntation/controller/homecontroller.dart';
-import 'core/features/Boarding/onBoarding.dart';
-import 'core/features/regester_presntation/controller/theme_controller.dart';
 import 'core/utils/theme.dart';
+import 'features/Boarding/onBoarding.dart';
+import 'features/Home/presntation/controller/homecontroller.dart';
+import 'features/Tasks/model/model.dart';
+import 'features/regester_presntation/controller/theme_controller.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  Hive.registerAdapter(NotesAdapter());
   await Hive.openBox("SettingBox");
+  await Hive.openBox<Notes>("NotesBox");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create:(context) => ThemeProvider()),
