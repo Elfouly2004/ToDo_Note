@@ -7,6 +7,7 @@ import 'package:todo/core/utils/Apptexts.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/utils/Appimages.dart';
 import '../../Home/homescreen.dart';
+import '../controller/regester_controller.dart';
 import '../controller/theme_controller.dart';
 
 class regester extends StatefulWidget {
@@ -19,16 +20,10 @@ class regester extends StatefulWidget {
 class _regesterState extends State<regester> {
 
   String name ="";
-  GlobalKey<FormState> formkey1= GlobalKey <FormState>();
 
 
-  XFile ? myPhoto ;
-  // myPhoto = null ;
-  Future<XFile?>   pickImage( ) async{
-     ImagePicker picker = ImagePicker();
-     XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    return image;
-  }
+
+
 
 
 
@@ -60,12 +55,7 @@ class _regesterState extends State<regester> {
 
                GestureDetector(
                  onTap: () {
-                   pickImage().then((value) {
-                     myPhoto = (value);
-                     setState(() {
-
-                     });
-                   });
+                   Provider.of<regesterprov>(context,listen: false).choosephoto();
                  },
                  child: Container(
                      height:MediaQuery.sizeOf(context).height*0.15,
@@ -78,12 +68,12 @@ class _regesterState extends State<regester> {
                        borderRadius: BorderRadius.circular(20),
                        border: Border.all(color: AppColors.camera,width: 2)
                    ),
-                   child:myPhoto == null?
+                   child:  Provider.of<regesterprov>(context,listen: false).myPhoto == null?
                    Icon(Icons.add_a_photo,
                      color: Provider.of<ThemeProvider>(context).switchValue==false?AppColors.black:AppColors.white,)
                        : ClipRRect(
                        borderRadius: BorderRadius.circular(20),
-                       child: Image.file(File(myPhoto!.path),fit: BoxFit.cover,
+                       child: Image.file(File(  Provider.of<regesterprov>(context,listen: false).myPhoto!.path),fit: BoxFit.cover,
                          height:MediaQuery.sizeOf(context).height*0.1,
                            width:MediaQuery.sizeOf(context).height*0.1 ,)),
                  ),
@@ -93,16 +83,12 @@ class _regesterState extends State<regester> {
                TextButton(
 
                  onPressed: ( ) {
-                   pickImage().then((value) {
-                     myPhoto = (value);
-                     setState(() {
+                   Provider.of<regesterprov>(context,listen: false).choosephoto();
 
-                     });
-                   });
                  },
                    
 
-                 child: Text(myPhoto ==null? AppTexts.Add: AppTexts.update,
+                 child: Text(  Provider.of<regesterprov>(context,listen: false).myPhoto ==null? AppTexts.Add: AppTexts.update,
                   style: Theme.of(context).textTheme.bodyMedium,)
                ),
 
@@ -127,9 +113,12 @@ class _regesterState extends State<regester> {
                          mainAxisAlignment: MainAxisAlignment.start,
                          children: [
 
-                           Text("  Your Name :",style: Theme.of(context).textTheme.bodyMedium, ),
+                           Text("  Your Name :",
+                             style: Theme.of(context).textTheme.bodyMedium, ),
+
+
                            Form(
-                             key:formkey1,
+                             key:Provider.of<regesterprov>(context).formkey1,
                              child: TextFormField(
 
                                keyboardType: TextInputType.name,
@@ -144,7 +133,7 @@ class _regesterState extends State<regester> {
                                 ),
 
                                onChanged: (value) {
-                                name=(value);
+                                 Provider.of<regesterprov>(context,listen: false).name=(value);
                                },
 
                                validator: (value) {
@@ -167,15 +156,15 @@ class _regesterState extends State<regester> {
                SizedBox(height:MediaQuery.sizeOf(context).height*0.05,),
 
 
-               Provider.of<ThemeProvider>(context).
-               switchValue == false?
+               Provider.of<ThemeProvider>(context).switchValue == false?
                GestureDetector(
                  onTap: () {
 
-                   if(formkey1.currentState!.validate()==true&&myPhoto!=null){
+                   if(Provider.of<regesterprov>(context,listen: false).formkey1.currentState!.validate()==true&&
+                       Provider.of<regesterprov>(context,listen: false).myPhoto!=null){
                      Navigator.pushReplacement(context, MaterialPageRoute(
                        builder: (context) {
-                         return homescreen(name,photo:myPhoto!.path,selecttime: null ,) ;
+                         return homescreen() ;
                        },));
 
                    }
@@ -204,15 +193,22 @@ class _regesterState extends State<regester> {
                      ],
                    ),
                  ),
-               ):
+               )
+                   :
+
                GestureDetector(
                  onTap: () {
 
-                   if(formkey1.currentState!.validate()==true&&myPhoto!=null){
-                     Navigator.pushReplacement(context, MaterialPageRoute(
-                       builder: (context) {
-                         return homescreen(name,photo:myPhoto!.path,selecttime: null ,) ;
-                       },));
+                   if(Provider.of<regesterprov>(context,listen: false).formkey1.currentState!.validate()==true
+                       &&
+                       Provider.of<regesterprov>(context,listen: false).myPhoto!=null){
+
+                     Navigator.pushReplacement(context,
+                         MaterialPageRoute(builder: (context) {
+                         return homescreen();
+                       },
+                     )
+                     );
 
                    }
                  },

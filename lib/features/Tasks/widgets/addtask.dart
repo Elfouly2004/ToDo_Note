@@ -229,20 +229,6 @@ class _addtaskState extends State<addtask> {
               context: context,);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 },
                 child: Container(
                   height:52 ,

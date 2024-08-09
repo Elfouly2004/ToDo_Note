@@ -19,22 +19,18 @@ class _homebodyState extends State<homebody> {
   @override
   Widget build(BuildContext context) {
 
-    return Expanded(
-       flex: 3,
-      child: ListView.builder(
-        itemCount:  Provider.of<Homecontroller>(context,).writenote.length,
-        itemBuilder: (context, index) =>
-            notes(
-              index: index,
-              onDismissed: (p0) {
-            Provider.of<Homecontroller>(context,listen: false).deleteNote(index ,context);
+    return ListView.builder(
+      itemCount:  Provider.of<Homecontroller>(context,).writenote.length,
+      itemBuilder: (context, index) =>
+          notes(
+            index: index,
+            onDismissed: (p0) {
+          Provider.of<Homecontroller>(context,listen: false).deleteNote(index ,context);
+          },
+          onTap: () {
+            Provider.of<Homecontroller>(context,listen: false).deleteNote( index,context);
 
-        },
-            onTap: () {
-              Provider.of<Homecontroller>(context,listen: false).deleteNote( index,context);
-
-            },)
-      ),
+          },)
     );
 
   }

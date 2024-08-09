@@ -12,12 +12,21 @@ class Homecontroller extends ChangeNotifier{
   TextEditingController descriptioncontroller = TextEditingController();
 
   List<Notes> writenote =[];
+  List<Notes> Archivelist = [];
+  List<Notes> Done=[];
 
-  var NotesBox =Hive.box<Notes>("NotesBox");
+
+  openapp() {
+
+      var notesBox = Hive.box<Notes>("NotesBox");
+      writenote = notesBox.values.toList();
+      Archivelist = notesBox.values.where((Notes) => Notes.archive==true).toList();
+
+  }
+
+  
 
   addNote({ required title,required des, context})async {
-
-
    String? taskname = namecontroller.text.trim();
    String? description =descriptioncontroller.text.trim();
 
@@ -25,6 +34,7 @@ if (taskname.isNotEmpty&& description.isNotEmpty){
 
   namecontroller.text="";
   descriptioncontroller.text="";
+
    writenote.add(
       Notes(
         taskName: title,
@@ -34,17 +44,19 @@ if (taskname.isNotEmpty&& description.isNotEmpty){
         selecttime: selectedTime.format(context),
       )
   );
-  notifyListeners();
+
+  var NotesBox =Hive.box<Notes>("NotesBox");
+
+  await NotesBox.add(
+      Notes(taskName: title, decsrption: des,
+      starttask: selectedDate1.toString().split(" ")[0],
+      Endtask: selectedDate2.toString().split(" ")[0],
+      selecttime:  selectedTime.format(context)));
+
   Navigator.pop(context);
 
+  notifyListeners();
 
-
-
-  await NotesBox.add(Notes(taskName: namecontroller,
-      decsrption:descriptioncontroller,
-      starttask:selectedDate1,
-      Endtask: selectedDate2,
-      selecttime: selectedTime));
 
 }else{
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("you should write task")));
@@ -53,21 +65,13 @@ if (taskname.isNotEmpty&& description.isNotEmpty){
 
   }
 
-
-
   deleteNote(int index,context)async {
     writenote.removeAt(index);
   Navigator.pop(context);
   Navigator.pop(context);
 
     var NoteBox =Hive.box<Notes>("NotesBox");
-   await NoteBox.delete(Notes(taskName: namecontroller
-        , decsrption: descriptioncontroller,
-        starttask: selectedDate1,
-        Endtask: selectedDate2,
-        selecttime: selectedTime
-    ));
-
+   await NoteBox.deleteAt(index);
     notifyListeners();
 
 
@@ -75,39 +79,33 @@ if (taskname.isNotEmpty&& description.isNotEmpty){
 
 //====================================================
 
-  List<Notes> Archivelist = [];
-
   updatearchive(context,int index )async{
 
-    Archivelist.add(
-        Notes(
-        taskName: namecontroller,
-        decsrption: descriptioncontroller,
-        starttask: selectedDate1,
-        Endtask: selectedDate2,
-        selecttime: selectedTime
-        )
-    );
-    Navigator.pop(context);
-
-  writenote[index].archive=true;
-
-    var NotaBox =Hive.box<Notes>("NotesBox");
     
-   await NotaBox.add(Notes(taskName: namecontroller,
-        decsrption:descriptioncontroller,
-        starttask:selectedDate1,
-        Endtask: selectedDate2,
-        selecttime: selectedTime));
+    var Archivenote=Notes(
+    taskName:  namecontroller,
+    decsrption: descriptioncontroller,
+    starttask: selectedDate1,
+    Endtask: selectedDate2,
+    selecttime: selectedTime);
 
+    Archivelist.add(Archivenote);
+
+    writenote[index].archive=true;
+
+    var notesBox =Hive.box<Notes>("NotesBox");
+    notesBox.putAt(index,  writenote[index]);
+    Navigator.pop(context);
     notifyListeners();
 
   }
 
+
   deletearchive({required index}){
-    // Archivelist.removeAt(index);
     Archivelist[index].archive = false;
     writenote[writenote.indexOf(Archivelist[index])].archive = false;
+    var archiveBox = Hive.box<Notes>("ArchiveBox");
+    archiveBox.putAt(index,  writenote[index]);
     notifyListeners();
 
   }
@@ -115,18 +113,18 @@ if (taskname.isNotEmpty&& description.isNotEmpty){
   //====================================================
 
 
-  List<Notes> Done=[];
+
 
 
   updateadone(int index){
     writenote[index].done=!writenote[index].done;
+    var notesBox =Hive.box<Notes>("NotesBox");
+    notesBox.putAt(index, writenote[index]);
+
     notifyListeners();
   }
 
 
-
-
-//========================================================
 
   DateTime selectedDate1 = DateTime.now();
   Future<void> SelectDate1(BuildContext context) async {

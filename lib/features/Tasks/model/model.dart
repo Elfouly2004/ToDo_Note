@@ -36,11 +36,7 @@ class Notes extends HiveObject{
      );
 }
 
-  // List<Notes> writenote =[];
 
-// List<Notes> Done =[];
-//
-// List<Notes> Archivelist =[];
 
 
 

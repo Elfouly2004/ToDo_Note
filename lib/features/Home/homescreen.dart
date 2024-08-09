@@ -12,29 +12,20 @@ import '../../core/utils/Appcolors.dart';
 import '../Tasks/widgets/addtask.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../regester_presntation/controller/regester_controller.dart';
 import '../regester_presntation/controller/theme_controller.dart';
 
 class homescreen extends StatefulWidget {
-  String name="";
-  final  photo;
-  final  selecttime;
 
 
 
-  homescreen( this.name,{required this.photo,required this.selecttime});
+
 
   @override
-  State<homescreen> createState() => _homescreenState(this.name,this.photo,this.selecttime);
+  State<homescreen> createState() => _homescreenState();
 }
 
 class _homescreenState extends State<homescreen> {
-  String name="";
-  final String photo;
-  final  selecttime;
-
-  _homescreenState(this.name, this.photo,this.selecttime);
-
-  bool theme=false;
 
   @override
   Widget build(BuildContext context) {
@@ -86,12 +77,12 @@ class _homescreenState extends State<homescreen> {
             ,
 
             Provider.of<ThemeProvider>(context).switchValue==false?
-            Text("${name}",style: TextStyle(
+            Text("${Provider.of<regesterprov>(context,listen: false).name}",style: TextStyle(
                 fontSize:20 ,
                 fontWeight: FontWeight.w800,
                 color: AppColors.hello),)
                 :
-            Text("${name}",style: Theme.of(context).textTheme.bodyLarge,)
+            Text("${Provider.of<regesterprov>(context,listen: false).name}",style: Theme.of(context).textTheme.bodyLarge,)
             ,
 
 
@@ -108,15 +99,25 @@ class _homescreenState extends State<homescreen> {
           ],
         ),
 
-        actions: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.white,
-            backgroundImage: FileImage(File(photo)),
-          )
-
+        actions:  [
+          Consumer<regesterprov>(
+            builder: (context, regesterProv, child) {
+              return CircleAvatar(
+                radius: 40,
+                backgroundColor: Colors.white,
+                backgroundImage: regesterProv.myPhoto != null
+                    ? FileImage(File(regesterProv.myPhoto!.path))
+                    : null,
+                child: regesterProv.myPhoto == null
+                    ? Icon(Icons.person, size: 40, color: Colors.grey)
+                    : null,
+              );
+            },
+          ),
         ],
       ),
+
+
       drawer: Drawer(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -126,7 +127,7 @@ class _homescreenState extends State<homescreen> {
         surfaceTintColor: Colors.deepOrange,
         backgroundColor:Provider.of<ThemeProvider>(context).switchValue==false? AppColors.white:AppColors.dark,
         width: 260,
-        child:wide_drawer(Photo: File(photo),name: name,)
+        child:wide_drawer()
       ),
 
 
@@ -161,10 +162,7 @@ class _homescreenState extends State<homescreen> {
                 onPressed:  () {
                setState(() {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                   return addtask(
-
-
-                   );
+                   return addtask();
                  },));
                });
                 },

@@ -5,13 +5,12 @@ import '../../../../core/utils/Appcolors.dart';
 import '../../../../core/utils/Appimages.dart';
 import '../../../Donetask/donescreen.dart';
 import '../../../archive tasks/archivescreen.dart';
+import '../../../regester_presntation/controller/regester_controller.dart';
 import '../../../regester_presntation/controller/theme_controller.dart';
 
 class wide_drawer extends StatelessWidget {
 
-  final String name;
-  final File Photo;
-  const wide_drawer({required this.name,required this.Photo, });
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +40,25 @@ class wide_drawer extends StatelessWidget {
 
                 CircleAvatar(
 
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.white,
-                    backgroundImage: Image.file(Photo).image,
+                  child: Consumer<regesterprov>(
+                    builder: (context, regesterProv, child) {
+                      return CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.white,
+                        backgroundImage: regesterProv.myPhoto != null
+                            ? FileImage(File(regesterProv.myPhoto!.path))
+                            : null,
+                        child: regesterProv.myPhoto == null
+                            ? Icon(Icons.person, size: 40, color: Colors.grey)
+                            : null,
+                      );
+                    },
                   ),
                   radius: 40,
                   foregroundColor: Colors.white ,
                 ),
 
-                Text("${name}",style: TextStyle(
+                Text("${Provider.of<regesterprov>(context,listen: false).name}",style: TextStyle(
                     fontSize:20 ,
                     fontWeight: FontWeight.w800,
                     color: AppColors.white),),

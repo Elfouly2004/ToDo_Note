@@ -192,9 +192,8 @@ class _taskdetailsState extends State<taskdetails> {
 
               GestureDetector(
                 onTap:() {
-
-                 Provider.of<Homecontroller>(context,listen: false).updatearchive(context,index);
-
+                 Provider.of<Homecontroller>(context,listen: false).
+                 updatearchive(context,index);
                 },
                 child: Container(
                   height:52 ,

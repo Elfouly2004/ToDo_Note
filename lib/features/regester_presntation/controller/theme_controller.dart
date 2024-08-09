@@ -1,11 +1,10 @@
 
 
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class ThemeProvider  with ChangeNotifier{
-
-
 
 
   bool  switchValue = false;
@@ -16,6 +15,9 @@ class ThemeProvider  with ChangeNotifier{
     switchValue = box.get("switchValue") ?? false ;
     notifyListeners();
 
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   notifyListeners();
+    // });
 
   }
 
@@ -23,10 +25,9 @@ class ThemeProvider  with ChangeNotifier{
 
 
   changeSwitchValue(bool     t )async {
-   var box =Hive.box("SettingBox");
-   await box.put("switchValue", t);
+    var box =Hive.box("SettingBox");
+    await box.put("switchValue", t);
     switchValue = box.get("switchValue") ;
-
     notifyListeners();
 
   }
